@@ -5,23 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stardust XR Docs</title>
     <link rel="stylesheet" href="../style.css" />
+    <style>
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
     <link rel="icon" type="image/png" href="../img/icon.png" />
     <script src="../js/marked.min.js"></script>
     <script src="docs.js" defer></script>
   </head>
   <body>
     <header>
-      <h1>
-        <a href="../index.html" style="color: inherit; text-decoration: none"
-          >Stardust XR Docs</a
-        >
-      </h1>
-      <nav>
-        <a href="../index.html">Home</a>
-      </nav>
+      <div class="header-content">
+        <div class="logo-container">
+          <img src="../img/icon.webp" alt="Stardust XR logo, a yellow star with smaller white stars around it in a purple cosmic background" class="logo" />
+          <h1>Stardust XR</h1>
+        </div>
+        <p class="tagline">Stardust... We Fight For the Users!</p>
+        <nav>
+          <div class="nav-right">
+            <a href="https://discord.gg/A9w7fKE" target="_blank" rel="noopener" class="nav-icon">
+              <i class="fab fa-discord" aria-hidden="true"></i>
+              <span class="sr-only">Join our Discord server</span>
+            </a>
+            <a href="https://matrix.to/#/#stardustxr:matrix.org" target="_blank" rel="noopener" class="nav-text matrix-link">
+              <span aria-label="Join our Matrix space">[matrix]</span>
+            </a>
+            <a href="https://bsky.app/profile/stardustxr.org" target="_blank" rel="noopener" class="nav-icon">
+              <i class="fa-brands fa-bluesky" aria-hidden="true"></i>
+              <span class="sr-only">Follow us on Bluesky</span>
+            </a>
+            <a href="https://twitter.com/stardustxr" target="_blank" rel="noopener" class="nav-icon">
+              <i class="fab fa-twitter" aria-hidden="true"></i>
+              <span class="sr-only">Follow us on Twitter</span>
+            </a>
+            <a href="https://github.com/StardustXR" target="_blank" rel="noopener" class="nav-icon">
+              <i class="fab fa-github" aria-hidden="true"></i>
+              <span class="sr-only">View our GitHub repositories</span>
+            </a>
+            <a href="https://github.com/sponsors/technobaboo" target="_blank" rel="noopener" class="nav-icon sponsor-link">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+              <span class="sr-only">Sponsor Stardust XR development</span>
+            </a>
+          </div>
+        </nav>
+      </div>
     </header>
     <main>
-  <div id="content" class="doc-content">Loading...</div>
+      <div id="content" class="doc-content">Loading...</div>
       <div class="doc-links">
         <h2>Quick Links</h2>
         <ul>
@@ -29,5 +69,32 @@
         </ul>
       </div>
     </main>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul>
+            <li>
+              <a href="https://discord.gg/A9w7fKE" target="_blank" rel="noopener">Discord</a>
+            </li>
+            <li>
+              <a href="https://matrix.to/#/#stardustxr:matrix.org" target="_blank" rel="noopener">Matrix</a>
+            </li>
+            <li>
+              <a href="https://bsky.app/profile/stardustxr.org" target="_blank" rel="noopener">Bluesky</a>
+            </li>
+            <li>
+              <a href="https://twitter.com/stardustxr" target="_blank" rel="noopener">Twitter</a>
+            </li>
+            <li>
+              <a href="https://github.com/StardustXR" target="_blank" rel="noopener">GitHub</a>
+            </li>
+            <li>
+              <a href="https://github.com/sponsors/technobaboo" target="_blank" rel="noopener">Sponsor This</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
