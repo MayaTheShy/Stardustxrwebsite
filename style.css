@@ -1,3 +1,50 @@
+/* Docs sidebar navigation */
+.docs-sidebar {
+	min-width: 220px;
+	max-width: 260px;
+	background: var(--background-light);
+	border-radius: 10px;
+	box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+	padding: 2rem 1.2rem 2rem 1.2rem;
+	margin-top: 1.5rem;
+	font-size: 1.04rem;
+	position: sticky;
+	top: 2rem;
+	height: fit-content;
+}
+.docs-sidebar h2 {
+	color: var(--primary);
+	font-size: 1.2rem;
+	margin-bottom: 1.2em;
+	text-align: left;
+}
+.docs-sidebar ul {
+	list-style: none;
+	padding-left: 0;
+	margin-bottom: 0.7em;
+}
+.docs-sidebar li {
+	margin-bottom: 0.4em;
+}
+.docs-sidebar li > ul {
+	margin-left: 1.1em;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
+}
+.docs-sidebar a {
+	color: var(--primary);
+	text-decoration: none;
+	transition: color 0.2s;
+}
+.docs-sidebar a:hover {
+	color: #fffbe6;
+	text-decoration: underline;
+}
+.docs-sidebar strong {
+	color: var(--text-muted);
+	font-weight: 700;
+	font-size: 1.01em;
+}
 /* Homepage feature highlights */
 .features {
 	display: flex;
