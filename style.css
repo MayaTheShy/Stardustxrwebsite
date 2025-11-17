@@ -1,3 +1,76 @@
+/* Docs content styling */
+.doc-content {
+	background: var(--background-light);
+	color: var(--text);
+	max-width: 900px;
+	margin: 2rem auto;
+	padding: 2.5rem 2rem;
+	border-radius: 10px;
+	box-shadow: 0 2px 16px 0 rgba(0,0,0,0.12);
+}
+.doc-content h1,
+.doc-content h2,
+.doc-content h3 {
+	color: var(--primary);
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+}
+.doc-content h1 {
+	font-size: 2.2rem;
+}
+.doc-content h2 {
+	font-size: 1.5rem;
+}
+.doc-content h3 {
+	font-size: 1.2rem;
+}
+.doc-content ul,
+.doc-content ol {
+	margin: 1rem 0 1rem 2rem;
+}
+.doc-content li {
+	margin-bottom: 0.5rem;
+}
+.doc-content code {
+	background: #22203a;
+	color: var(--primary);
+	padding: 0.2em 0.4em;
+	border-radius: 4px;
+	font-size: 0.97em;
+}
+.doc-content pre code {
+	display: block;
+	padding: 1em;
+	background: #22203a;
+	color: var(--primary);
+	border-radius: 6px;
+	overflow-x: auto;
+}
+.doc-content a {
+	color: var(--primary);
+	text-decoration: underline;
+}
+.doc-content a:hover {
+	color: #fffbe6;
+}
+.doc-content hr {
+	border: none;
+	border-top: 1px solid var(--accent);
+	margin: 2rem 0;
+}
+.doc-content table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1.5rem 0;
+}
+.doc-content th, .doc-content td {
+	border: 1px solid var(--accent);
+	padding: 0.5em 1em;
+}
+.doc-content th {
+	background: #1a1725;
+	color: var(--primary);
+}
 :root {
 	--primary: #ffe44d;
 	--background: #13111a;
