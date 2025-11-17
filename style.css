@@ -1,3 +1,96 @@
+/* Homepage feature highlights */
+.features {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2.5rem;
+	justify-content: center;
+	margin: 3rem 0 2rem 0;
+}
+.feature {
+	background: var(--background-light);
+	border-radius: 10px;
+	box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+	padding: 2rem 1.5rem;
+	max-width: 400px;
+	flex: 1 1 320px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+.feature h3 {
+	color: var(--primary);
+	margin-bottom: 0.7em;
+}
+.feature-img {
+	width: 100%;
+	max-width: 340px;
+	margin-top: 1.2em;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+}
+
+/* Showcase section */
+.showcase {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 2.5rem 0 2rem 0;
+}
+.showcase-img {
+	width: 100%;
+	max-width: 700px;
+	border-radius: 10px;
+	box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+}
+.showcase-caption {
+	color: var(--text-muted);
+	margin-top: 0.7em;
+	font-size: 1.05em;
+	text-align: center;
+}
+
+/* Quick links section */
+.quick-links {
+	margin: 3rem auto 2rem auto;
+	max-width: 700px;
+	background: var(--background-light);
+	border-radius: 10px;
+	box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+	padding: 2rem 1.5rem;
+	text-align: center;
+}
+.quick-links-list {
+	list-style: none;
+	padding: 0;
+	margin: 1.2em 0 0 0;
+}
+.quick-links-list li {
+	margin: 0.7em 0;
+}
+.quick-links-list a {
+	color: var(--primary);
+	font-weight: 600;
+	font-size: 1.08em;
+	text-decoration: underline;
+	transition: color 0.2s;
+}
+.quick-links-list a:hover {
+	color: #fffbe6;
+}
+
+@media (max-width: 900px) {
+	.features {
+		flex-direction: column;
+		align-items: center;
+	}
+	.feature {
+		max-width: 95vw;
+	}
+	.showcase-img {
+		max-width: 98vw;
+	}
+}
 /* Docs content styling */
 .doc-content {
 	background: var(--background-light);
