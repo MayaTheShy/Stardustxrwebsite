@@ -17,78 +17,71 @@ This guide covers installing Stardust XR packages on various distributions, and 
     style={{ verticalAlign: 'middle', height: '1em', marginRight: '0.5em' }} 
   />
   Fedora and Derivatives
+sudo rpm-ostree install terra-release
+sudo dnf group install stardust-xr
+sudo rpm-ostree install stardust-xr-armillary stardust-xr-atmosphere stardust-xr-black-hole stardust-xr-comet stardust-xr-flatland stardust-xr-gravity stardust-xr-magnetar stardust-xr-non-spatial-input stardust-xr-protostar stardust-xr-server stardust-xr-telescope
 </h3>
+On NixOS, use the [Nix package manager](https://nixos.org/download/#nix-install-linux). Make sure [flakes are enabled](https://nixos.wiki/wiki/flakes).
 
-If you already added Terra when setting up the Open XR runtime, you can skip to the install commands below.
+After the server is running, you'll need to run some clients. Clone any of these, `cargo build` & then `cargo run` after the server is already running, and they will load into the Stardust server!  
 
-:::info
-Stardust XR is packaged in the [Terra repository](https://terra.fyralabs.com/). If you are using [Ultramarine Linux](https://ultramarine-linux.org), [Bazzite](https://bazzite.gg), or [Aurora](https://getaurora.dev), this repository comes pre-installed, otherwise you will need to add the repository:
+# Full Installation
 
-Standard Fedora Editions and derivatives can directly install terra-release:
-```
+This guide covers installing Stardust XR packages on various distributions, and building from source.
+
+## Fedora and Derivatives
+
+![Fedora Logo](../../img/docs/Fedora_logo.svg)
+![Ultramarine Logo](../../img/docs/ultramarine-logo.svg)
+
+If you already added Terra when setting up the OpenXR runtime, you can skip to the install commands below.
+
+> **INFO:** Stardust XR is packaged in the [Terra repository](https://terra.fyralabs.com/). If you are using [Ultramarine Linux](https://ultramarine-linux.org), [Bazzite](https://bazzite.gg), or [Aurora](https://getaurora.dev), this repository comes pre-installed. Otherwise, you will need to add the repository:
+
+Standard Fedora Editions and derivatives:
+```sh
 sudo dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 ```
 
-If you are using [RHEL10](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux-10) or derrivative you will need to first the EPEL repos, which may be installed with:
-```
+RHEL10 or derivatives (add EPEL first):
+```sh
 sudo dnf install 'https://dl.fedoraproject.org/pub/epel/epel-release-latest-$releasever.noarch.rpm'
+A 3D model viewer for Stardust XR; rotate, move, and display models in your XR space
 ```
 
-Then install terra-release:
-
-```
-sudo dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terrael$releasever' terra-release
-```
-
-If you are using a [Fedora Atomic Edition](https://fedoraproject.org/atomic-desktops/) or derrivative you will need to run the following command:
-```
+Fedora Atomic Edition or derivatives:
+```sh
 curl -fsSL https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo | pkexec tee /etc/yum.repos.d/terra.repo
 sudo rpm-ostree install terra-release
 ```
-:::  
-Then, run this command to install all Stardust XR packages:
-```
+
+**Install Stardust XR packages:**
+```sh
 sudo dnf group install stardust-xr
 ```
 
-If using a Fedora Atomic/Universal Blue based image, run the following command to install all Stardust XR packages:
-
-```
+Fedora Atomic/Universal Blue based images:
+```sh
 sudo rpm-ostree install stardust-xr-armillary stardust-xr-atmosphere stardust-xr-black-hole stardust-xr-comet stardust-xr-flatland stardust-xr-gravity stardust-xr-magnetar stardust-xr-non-spatial-input stardust-xr-protostar stardust-xr-server stardust-xr-telescope
 ```
-<h3>
-  <img src="/img/docs/arch.png" alt="Logo" style={{ verticalAlign: 'middle', height: '1em', marginRight: '0.5em' }} />
-  Arch Linux 
-</h3>
 
-```
+## Arch Linux
+
+![Arch Logo](../../img/docs/arch.png)
+
+```sh
 paru -s stardust-xr-armillary stardust-xr-atmosphere stardust-xr-black-hole stardust-xr-comet stardust-xr-flatland stardust-xr-gravity stardust-xr-magnetar stardust-xr-non-spatial-input stardust-xr-protostar stardust-xr-server stardust-xr-telescope
 ```
 
-On NixOS, use the [Nix package manager](https://nixos.org/download/#nix-install-linux). Make sure [flakes are enabled](https://nixos.wiki/wiki/flakes).
-```
+## NixOS
+
+Use the [Nix package manager](https://nixos.org/download/#nix-install-linux). Make sure [flakes are enabled](https://nixos.wiki/wiki/flakes).
+
+```sh
 nix run github:StardustXR/telescope
 ```
 
 From there, you can launch Stardust with `telescope`, then in another terminal window or tab, run any other clients you need. We recommend `flatland` and `hexagon-launcher`.
-
-# Manual Build  
-:::caution  
-Make sure all of the repositories that are cloned are on the same branch (e.g. all main or all dev branch) to ensure Stardust protocol compatibility  
-:::
-### Server
-
-Clone the [Stardust XR Server](https://github.com/StardustXR/server) `https://github.com/StardustXR/server`
-
-Make sure to check the list of prerequisites. Run `cargo build` and `cargo run` in the cloned repo to start the server. As stated above, the Stardust server will simply load in with a black void until clients are loaded in. This behaviour can currently be modified by creating a `startup` file inside the folder `~/.config/stardust/` to automate the loading in of clients, an example of which is shown [here](https://youtu.be/c6RyEYDz2iw?si=pL1zffNVsWocZHrc&t=788), and an example of is linked [here](https://github.com/cyberneticmelon/usefulscripts/blob/main/startup)
-
-### Clients
-
-After the server is running, you'll need to run some clients. Clone any of these, `cargo build` & then `cargo run` after the server is already running, and they will load into the Stardust server!  
-
-Non-exhaustive list of clients:
-- [**armillary**](https://github.com/StardustXR/Armillary): `https://github.com/StardustXR/Armillary`  
-A 3D model viewer for Stardust XR; rotate, move, and display models in your XR space
 - [**atmosphere**](https://github.com/StardustXR/atmosphere): `https://github.com/StardustXR/atmosphere`  
 3D environment with natural momentum-based movement
 - [**black hole**](https://github.com/StardustXR/black-hole): `https://github.com/StardustXR/black-hole`  
