@@ -7,6 +7,9 @@
 	padding: 2.5rem 2rem;
 	border-radius: 10px;
 	box-shadow: 0 2px 16px 0 rgba(0,0,0,0.12);
+	font-size: 1.08rem;
+	line-height: 1.75;
+	font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
 }
 .doc-content h1,
 .doc-content h2,
@@ -14,22 +17,30 @@
 	color: var(--primary);
 	margin-top: 2rem;
 	margin-bottom: 1rem;
+	font-weight: 700;
 }
 .doc-content h1 {
 	font-size: 2.2rem;
+	border-bottom: 2px solid var(--accent);
+	padding-bottom: 0.3em;
 }
 .doc-content h2 {
 	font-size: 1.5rem;
+	border-bottom: 1px solid var(--accent);
+	padding-bottom: 0.2em;
 }
 .doc-content h3 {
 	font-size: 1.2rem;
+	color: var(--text-muted);
 }
 .doc-content ul,
 .doc-content ol {
 	margin: 1rem 0 1rem 2rem;
+	padding-left: 1.5em;
 }
 .doc-content li {
 	margin-bottom: 0.5rem;
+	line-height: 1.7;
 }
 .doc-content code {
 	background: #22203a;
@@ -37,6 +48,7 @@
 	padding: 0.2em 0.4em;
 	border-radius: 4px;
 	font-size: 0.97em;
+	font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
 }
 .doc-content pre code {
 	display: block;
@@ -45,10 +57,13 @@
 	color: var(--primary);
 	border-radius: 6px;
 	overflow-x: auto;
+	font-size: 1em;
+	font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
 }
 .doc-content a {
 	color: var(--primary);
 	text-decoration: underline;
+	font-weight: 500;
 }
 .doc-content a:hover {
 	color: #fffbe6;
@@ -62,14 +77,40 @@
 	width: 100%;
 	border-collapse: collapse;
 	margin: 1.5rem 0;
+	background: #18152a;
+	border-radius: 6px;
+	overflow: hidden;
 }
 .doc-content th, .doc-content td {
 	border: 1px solid var(--accent);
 	padding: 0.5em 1em;
+	text-align: left;
 }
 .doc-content th {
 	background: #1a1725;
 	color: var(--primary);
+	font-weight: 700;
+	font-size: 1.05em;
+}
+.doc-content blockquote {
+	border-left: 4px solid var(--accent);
+	background: #18152a;
+	color: var(--text-muted);
+	margin: 1.5em 0;
+	padding: 1em 1.5em;
+	font-style: italic;
+	border-radius: 6px;
+}
+.doc-content strong {
+	color: var(--primary);
+	font-weight: 700;
+}
+.doc-content em {
+	color: var(--text-muted);
+	font-style: italic;
+}
+.doc-content p {
+	margin: 1.1em 0;
 }
 :root {
 	--primary: #ffe44d;
