@@ -902,7 +902,8 @@ footer {
 	.image-popup-overlay.open {
 		display: flex;
 	}
-	.image-popup-wrap {
+	/* Window-like frame to make the popup feel like a native window */
+	.image-popup-window {
 		max-width: 95vw;
 		max-height: 95vh;
 		display: flex;
@@ -910,10 +911,19 @@ footer {
 		gap: 0.6rem;
 		align-items: center;
 		justify-content: center;
+		background: linear-gradient(180deg, rgba(24,21,33,0.96), rgba(20,18,30,0.96));
+		border-radius: 10px;
+		padding: 10px 12px 18px 12px;
+		border: 1px solid rgba(255,255,255,0.04);
+		box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+		position: relative;
 	}
 	.image-popup-img {
-		max-width: 95vw;
-		max-height: 85vh;
+		/* show image at its native size if it fits, otherwise scale down but keep margin */
+		width: auto;
+		height: auto;
+		max-width: calc(100vw - 64px);
+		max-height: calc(100vh - 64px);
 		object-fit: contain;
 		border-radius: 8px;
 		box-shadow: 0 6px 24px rgba(0,0,0,0.8);
@@ -949,6 +959,22 @@ footer {
 
 	/* Allow opt-out of popup by adding .no-popup to an image */
 	img.no-popup { cursor: default; }
+}
+.image-popup-header {
+	width: 100%;
+	height: 36px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 0.6rem;
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	pointer-events: none; /* header itself shouldn't block image clicks */
+}
+.image-popup-header .image-popup-close {
+	position: relative;
+	pointer-events: auto; /* enable clicks on the close button */
 }
 
 /* When the tagline is hidden, move it out of the document flow only on
