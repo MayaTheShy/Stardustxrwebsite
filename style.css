@@ -41,6 +41,9 @@
 		display: block !important;
 		z-index: 2003;
 	}
+
+	/* Move the logo right to avoid overlapping the hamburger */
+	.logo-container { margin-left: 68px; }
 	#docs-sidebar:not(.open) {
 		display: none;
 	}
@@ -369,6 +372,8 @@ body {
 header {
 	background: var(--background-light);
 	padding: 1rem 2rem;
+	position: relative;
+	z-index: 3000; /* make sure header is above overlay/sidebar */
 }
 
 .header-content {
@@ -384,6 +389,9 @@ header {
 	align-items: center;
 	gap: 1rem;
 }
+
+/* Keep logo on top of toggle and sidebar */
+.logo-container { position: relative; z-index: 3001; }
 
 .logo {
 	width: 40px;
