@@ -157,12 +157,18 @@ window.addEventListener('DOMContentLoaded', () => {
     // Move social links from the header into the sidebar on small screens
     const headerSocials = Array.from(document.querySelectorAll('.nav-right a.nav-icon, .nav-right a.nav-text'));
     let sidebarSocials = sidebar.querySelector('.sidebar-socials');
-    if (!sidebarSocials) {
+      if (!sidebarSocials) {
       sidebarSocials = document.createElement('div');
       sidebarSocials.className = 'sidebar-socials';
       // Insert it right after the <h2> heading inside the sidebar
       const heading = sidebar.querySelector('h2');
-      if (heading && heading.parentNode) heading.insertAdjacentElement('afterend', sidebarSocials);
+        // Place the socials above the heading so the hamburger shows them
+        // at the top of the overlay. Add a distinguishing class so CSS can
+        // style the placement differently (border-bottom instead of border-top).
+        if (heading && heading.parentNode) {
+          heading.insertAdjacentElement('beforebegin', sidebarSocials);
+          sidebarSocials.classList.add('placed-above-heading');
+        }
       else sidebar.appendChild(sidebarSocials);
     }
 
