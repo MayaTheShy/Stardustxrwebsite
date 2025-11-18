@@ -137,10 +137,14 @@ window.addEventListener('DOMContentLoaded', () => {
         const headerWidth = header.clientWidth;
         const logoWidth = logo.offsetWidth;
         const navWidth = nav.offsetWidth;
-        const gap = 32; // conservatively account for flex gap & padding
+      const gap = 28; // conservatively account for flex gap & padding
+        // add a small buffer so we hide the tagline before it has to wrap;
+        // this prevents the header content from landing in a two-line state
+        // where the title and tagline share the header but look awkward.
+      const buffer = Math.max(36, Math.round(headerWidth * 0.06));
         // Use scrollWidth to get the natural width the tagline needs
         const tagNeeded = tagline.scrollWidth;
-        pushedDown = (logoWidth + tagNeeded + navWidth + gap) > headerWidth;
+  pushedDown = (logoWidth + tagNeeded + navWidth + gap + buffer) > headerWidth;
       }
     } catch (e) {
       pushedDown = false;
@@ -154,8 +158,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (shouldHide === _pendingTaglineState) return;
     _pendingTaglineState = shouldHide;
     // schedule the real toggling so quick layout flashes don't cause flicker
-    if (_taglineDebounce) clearTimeout(_taglineDebounce);
-    _taglineDebounce = setTimeout(() => {
+  if (_taglineDebounce) clearTimeout(_taglineDebounce);
+  _taglineDebounce = setTimeout(() => {
       const hide = _pendingTaglineState;
       if (hide) {
         tagline.classList.add('tagline-hidden');
@@ -166,7 +170,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
       _lastAppliedTaglineState = hide;
       _taglineDebounce = null;
-    }, 120);
+  }, 200);
   }
   // Run on load and on resize; also use ResizeObserver when available.
   updateTagline();
