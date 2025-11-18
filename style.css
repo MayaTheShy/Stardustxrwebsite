@@ -229,7 +229,7 @@
 	background: var(--background-light);
 	color: var(--text);
 	max-width: 900px;
-	margin: 1.25rem auto; /* reduced top margin so content comes closer to header */
+	margin: 0.6rem auto; /* reduced top margin so content comes closer to header */
 	padding: 2.5rem 2rem;
 	border-radius: 10px;
 	box-shadow: 0 2px 16px 0 rgba(0,0,0,0.12);
