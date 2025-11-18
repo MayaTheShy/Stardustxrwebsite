@@ -50,7 +50,7 @@
 	top: 50%;
 	left: 18px;
 	transform: translateY(-50%);
-	z-index: 2300;
+	z-index: 3100; /* above header to ensure it's clickable */
 	background: #181a20;
 	border: 1px solid rgba(255,255,255,0.06);
 	opacity: 0.98;
@@ -452,7 +452,7 @@ main {
 	max-width: 1200px;
 	margin: 0 auto;
 	/* smaller gap under header to keep the layout compact */
-	padding: calc(var(--header-height) + 0.4rem) 2rem 2rem;
+		padding: calc(var(--header-height) + 0.1rem) 2rem 2rem;
 }
 
 .hero {
