@@ -57,10 +57,11 @@
 
 /* Hamburger always above overlay */
 .sidebar-toggle {
-	position: fixed;
-	top: 18px;
+	position: absolute;
+	top: 50%;
 	left: 18px;
-	z-index: 2003;
+	transform: translateY(-50%);
+	z-index: 2300;
 	background: #181a20;
 	border: 1px solid rgba(255,255,255,0.06);
 	opacity: 0.98;
@@ -375,6 +376,8 @@ body {
 header {
 	background: var(--background-light);
 	padding: 1rem 2rem;
+	position: relative; /* allow absolute items inside */
+	z-index: 2200; /* keep header above overlay */
 }
 
 .header-content {
