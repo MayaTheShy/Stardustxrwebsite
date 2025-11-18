@@ -40,6 +40,29 @@
 	.logo-container { margin-left: 68px; }
 	.header-content { padding-left: 68px; }
 
+	/* When the hamburger is visible (mobile), hide header social icons and show them in the sidebar */
+	.nav-right a.nav-icon,
+	.nav-right a.nav-text {
+		display: none;
+	}
+
+	/* Styling for socials inside the sidebar on mobile */
+	.docs-sidebar .sidebar-socials {
+		display: flex;
+		gap: 0.9rem;
+		margin-top: 0.8rem;
+		padding-top: 0.6rem;
+		border-top: 1px solid rgba(255,255,255,0.04);
+		align-items: center;
+	}
+	.docs-sidebar .sidebar-socials a.nav-icon,
+	.docs-sidebar .sidebar-socials a.nav-text {
+		display: inline-flex;
+		font-size: 1.05rem;
+		color: var(--primary);
+		text-decoration: none;
+	}
+
 	#docs-sidebar:not(.open) { display: none; }
 	body.sidebar-open .sidebar-overlay { display: block; }
 }
