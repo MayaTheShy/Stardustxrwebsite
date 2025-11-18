@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2048" height="1024" viewBox="0 0 2048 1024" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- soft radial color blobs to emulate nebula -- >
+    <radialGradient id="g1" cx="25%" cy="30%" r="60%">
+      <stop offset="0" stop-color="#6B2E93" stop-opacity="0.50"/>
+      <stop offset="0.5" stop-color="#2E2160" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.00"/>
+    </radialGradient>
+
+    <radialGradient id="g2" cx="82%" cy="18%" r="60%">
+      <stop offset="0" stop-color="#1D2E5A" stop-opacity="0.46"/>
+      <stop offset="0.48" stop-color="#2D3E58" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.00"/>
+    </radialGradient>
+
+    <radialGradient id="g3" cx="40%" cy="62%" r="46%">
+      <stop offset="0" stop-color="#E7F6FF" stop-opacity="0.14"/>
+      <stop offset="0.45" stop-color="#BAD9FF" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.00"/>
+    </radialGradient>
+
+    <filter id="blur-global">
+      <feGaussianBlur stdDeviation="40" result="b"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.9 0"/>
+    </filter>
+
+    <filter id="blur-sm">
+      <feGaussianBlur stdDeviation="18" />
+    </filter>
+
+    <!-- quick star flecks layer (micro stars) -->
+    <pattern id="stars" x="0" y="0" width="1" height="1" patternUnits="objectBoundingBox">
+      <rect width="1" height="1" fill="transparent"/>
+    </pattern>
+  </defs>
+
+  <!-- big nebulous blobs -->
+  <rect width="100%" height="100%" fill="#000"/>
+  <g filter="url(#blur-global)" opacity="0.9" style="mix-blend-mode: screen;">
+    <ellipse cx="520" cy="310" rx="720" ry="340" fill="url(#g1)" />
+    <ellipse cx="1660" cy="130" rx="640" ry="260" fill="url(#g2)" />
+    <ellipse cx="1100" cy="640" rx="520" ry="260" fill="url(#g3)" />
+  </g>
+
+  <!-- subtle clouds made from multiple soft shapes -->
+  <g filter="url(#blur-sm)" opacity="0.22" style="mix-blend-mode: screen;">
+    <path d="M200 700 C 280 640, 380 620, 560 640 C 680 650, 740 690, 980 720 C 1300 760, 1400 740, 1600 690 C 1700 660, 1850 630, 2048 610 L 2048 1024 L 0 1024 L 0 700 Z" fill="#20345D" />
+    <path d="M0 300 C 180 260, 360 220, 620 240 C 920 264, 1100 300, 1400 330 C 1680 360, 1960 360, 2048 360 L 2048 0 L 0 0 Z" fill="#6B2E93" />
+  </g>
+
+  <!-- small soft highlights -->
+  <g opacity="0.4" style="mix-blend-mode: screen;">
+    <circle cx="420" cy="220" r="54" fill="#F3F1FF" filter="url(#blur-sm)" />
+    <circle cx="1520" cy="420" r="44" fill="#BFE0FF" filter="url(#blur-sm)" />
+    <circle cx="980" cy="120" r="28" fill="#FFF4CA" filter="url(#blur-sm)" />
+  </g>
+
+  <!-- a faint star/cloud scatter overlay built using many tiny circles (vector stars). -->
+  <g opacity="0.75" style="mix-blend-mode: screen;">
+    <!-- We manually place small points for better randomness; use a few dozen circles -->
+    <!-- group 1 -->
+    <g fill="#FFE44D" fill-opacity="0.9">
+      <circle cx="20" cy="24" r="1.1" />
+      <circle cx="110" cy="84" r="0.9" />
+      <circle cx="36" cy="300" r="0.7" />
+      <circle cx="480" cy="20" r="0.9" />
+      <circle cx="760" cy="190" r="0.8" />
+      <circle cx="920" cy="162" r="0.7" />
+      <circle cx="1102" cy="88" r="0.6" />
+      <circle cx="1320" cy="24" r="1.1" />
+    </g>
+    <!-- group 2: white/blue small stars -->
+    <g fill="#E8F7FF" fill-opacity="0.85">
+      <circle cx="40" cy="140" r="0.8" />
+      <circle cx="204" cy="232" r="0.6" />
+      <circle cx="610" cy="420" r="0.7" />
+      <circle cx="1112" cy="420" r="0.7" />
+      <circle cx="1532" cy="512" r="0.95" />
+      <circle cx="1892" cy="216" r="0.8" />
+    </g>
+    <!-- more scattered microstars, lighter intensity -->
+    <g fill="#DDEBFF" fill-opacity="0.5">
+      <circle cx="230" cy="16" r="0.66" />
+      <circle cx="340" cy="44" r="0.6" />
+      <circle cx="280" cy="88" r="0.42" />
+      <circle cx="612" cy="22" r="0.5" />
+      <circle cx="760" cy="44" r="0.48" />
+      <circle cx="920" cy="22" r="0.44" />
+      <circle cx="1812" cy="68" r="0.52" />
+    </g>
+  </g>
+
+  <!-- lower-right denser star field with soft glow  -->
+  <g style="mix-blend-mode: screen;" opacity="0.44">
+    <circle cx="1840" cy="760" r="0.7" fill="#aec8ff" fill-opacity="0.75" />
+    <circle cx="1720" cy="780" r="1.2" fill="#fff" opacity="0.9" />
+    <circle cx="1660" cy="820" r="0.9" fill="#fff4d8" opacity="0.7" />
+    <circle cx="1780" cy="740" r="0.64" fill="#cfe8ff" opacity="0.6" />
+  </g>
+
+</svg>
