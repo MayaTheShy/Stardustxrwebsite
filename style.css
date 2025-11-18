@@ -95,7 +95,7 @@
 	margin-top: 1.5rem;
 	font-size: 1.04rem;
 	position: sticky;
-	top: calc(1rem + 64px); /* give space for the header above */
+	top: calc(1rem + var(--header-height)); /* give space for the header above */
 	height: fit-content;
 }
 .docs-sidebar h2 {
@@ -448,7 +448,7 @@ nav {
 main {
 	max-width: 1200px;
 	margin: 0 auto;
-	padding: 4rem 2rem;
+	padding: calc(var(--header-height) + 1rem) 2rem 2rem; /* allow space for sticky header */
 }
 
 .hero {
