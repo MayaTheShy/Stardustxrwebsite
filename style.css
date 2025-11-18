@@ -463,8 +463,8 @@ nav {
 main {
 	max-width: 1200px;
 	margin: 0 auto;
-	/* smaller gap under header to keep the layout compact */
-		padding: calc(var(--header-height) + 0.1rem) 2rem 2rem;
+	/* default content spacing (desktop has header-specific padding applied in media query) */
+	padding: 4rem 2rem;
 }
 
 .hero {
