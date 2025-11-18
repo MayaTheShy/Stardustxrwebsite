@@ -40,11 +40,48 @@
   overlay.appendChild(wrap);
     // Append to the documentElement when possible to reduce chances of
     // being clipped by a stacking context on <body> or other ancestors.
-    try {
-      (document.documentElement || document.body).appendChild(overlay);
-    } catch (e) {
-      document.body.appendChild(overlay);
+    // Create or reuse a top-level overlay container appended to <body>
+    let overlayContainer = document.getElementById('stardust-overlay-root');
+    if (!overlayContainer) {
+      overlayContainer = document.createElement('div');
+      overlayContainer.id = 'stardust-overlay-root';
+      // strong inline styles to avoid being affected by other stacking contexts
+      overlayContainer.style.position = 'fixed';
+      overlayContainer.style.top = '0';
+      overlayContainer.style.left = '0';
+      overlayContainer.style.width = '100%';
+      overlayContainer.style.height = '100%';
+      overlayContainer.style.zIndex = '2147483647';
+      overlayContainer.style.pointerEvents = 'none';
+      document.body.appendChild(overlayContainer);
     }
+
+    // Ensure overlay is the last child and allow pointer events on it specifically
+    overlayContainer.appendChild(overlay);
+    overlay.style.pointerEvents = 'auto';
+    // enforce high z-index with !important to trump other stacking contexts
+    overlay.style.setProperty('z-index', '2147483647', 'important');
+    overlayContainer.style.setProperty('z-index', '2147483647', 'important');
+
+    // sanity check: if overlay is still not the topmost element at viewport center,
+    // increment the z-index slightly to try to outrank elements with enormous z-index.
+    setTimeout(() => {
+      const cx = Math.round(window.innerWidth / 2);
+      const cy = Math.round(window.innerHeight / 2);
+      const top = document.elementsFromPoint(cx, cy)[0];
+      if (top && !overlay.contains(top) && top !== overlay) {
+        // Bump z-index until overlay is topmost (safeguarded to avoid infinite loop)
+        let current = parseInt(getComputedStyle(overlay).zIndex || '2147483647', 10);
+        const max = 9999999999999; // arbitrary large fallback
+        while (current < max) {
+          current = Math.min(current + 1000, max);
+          overlay.style.setProperty('z-index', String(current), 'important');
+          overlayContainer.style.setProperty('z-index', String(current), 'important');
+          const t = document.elementsFromPoint(cx, cy)[0];
+          if (!t || overlay.contains(t) || t === overlay) break;
+        }
+      }
+    }, 60);
 
     // close overlay when clicking outside the image (on the overlay)
     overlay.addEventListener('click', function (ev) {

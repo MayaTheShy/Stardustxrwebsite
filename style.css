@@ -891,13 +891,18 @@ footer {
 
 	/* Image popup (lightbox) */
 	.image-popup-overlay {
-		position: fixed;
+		position: fixed !important;
 		inset: 0;
 		background: rgba(0, 0, 0, 0.85);
 		display: none;
 		align-items: center;
 		justify-content: center;
 		z-index: 2147483647 !important; /* ensure overlay is above everything */
+		top: 0 !important;
+		left: 0 !important;
+		right: 0 !important;
+		bottom: 0 !important;
+		isolation: isolate; /* ensure overlay establishes its own stacking context */
 		pointer-events: auto; /* allow clicks to pass to overlay */
 		/* ensure overlay is visible even if other stacking contexts exist */
 		backdrop-filter: blur(2px);
