@@ -140,6 +140,55 @@
 		overflow-y: auto;
 	}
 
+	/* Make the overlay (mobile hamburger) content larger and centered while
+	   keeping the desktop sidebar styles unchanged. We only apply spacing
+	   and alignment when the sidebar is open on small screens. */
+	body.sidebar-open .docs-sidebar {
+		/* Slightly larger text for tap targets */
+		font-size: 1.18rem; /* larger than the desktop 1.04rem */
+		/* Center contents horizontally so menu items are centered in the overlay */
+		text-align: center;
+		/* Give items a little more breathing room when in overlay mode */
+		padding: 2.5rem 1.6rem;
+	}
+
+	body.sidebar-open .docs-sidebar h2 {
+		text-align: center;
+		font-size: 1.45rem;
+		margin-bottom: 1.25rem;
+	}
+
+	body.sidebar-open .docs-sidebar ul {
+		padding-left: 0; /* don't indent list items on mobile */
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	body.sidebar-open .docs-sidebar li {
+		width: 100%;
+		max-width: 720px; /* keep items constrained for very wide phones */
+		text-align: left; /* keep nested sublists readable on the left */
+	}
+
+	body.sidebar-open .docs-sidebar > ul > li {
+		/* Top-level sections should be centered for the hamburger menu */
+		text-align: center;
+	}
+
+	body.sidebar-open .docs-sidebar a {
+		font-size: 1.18rem; /* bigger links for better tap targets */
+		display: inline-block;
+		padding: 0.4rem 1rem;
+		border-radius: 6px;
+	}
+
+	body.sidebar-open .docs-sidebar a:hover {
+		background: rgba(255,255,255,0.02);
+	}
+
 	/* Lock background scroll while overlay is displayed */
 	body.sidebar-open { overflow: hidden; }
 
@@ -162,6 +211,13 @@
 	body.sidebar-open main {
 		padding-top: calc(var(--header-height) + 0.75rem);
 	}
+}
+
+/* Keep nested lists aligned in overlay but avoid excessive left indent */
+body.sidebar-open .docs-sidebar li > ul {
+	margin-left: 0;
+	margin-top: 0.2em;
+	margin-bottom: 0.2em;
 }
 /* Docs sidebar navigation */
 /* Docs sidebar navigation */
@@ -202,6 +258,65 @@
 	margin-left: 1.1em;
 	margin-top: 0.2em;
 	margin-bottom: 0.2em;
+}
+
+/* Mobile overlay-only styles moved after the main .docs-sidebar rules so
+   they aren't accidentally overridden by the generic sidebar styles. This
+   ensures the overlay/hamburger menu is bigger and centered on mobile
+   while desktop (sidebar mode) remains unchanged. */
+@media (max-width: 900px) {
+	/* Target both the body-level open state and the .open flag on the sidebar
+	   (some code paths show the docs panel without toggling the body panel). */
+	body.sidebar-open .docs-sidebar,
+	.docs-sidebar.open,
+	#docs-sidebar.open {
+		font-size: 1.18rem; /* larger than desktop */
+		text-align: center;
+		padding: 2.5rem 1.6rem;
+	}
+
+	body.sidebar-open .docs-sidebar h2,
+	.docs-sidebar.open h2,
+	#docs-sidebar.open h2 {
+		text-align: center;
+		font-size: 1.45rem;
+		margin-bottom: 1.25rem;
+	}
+
+	body.sidebar-open .docs-sidebar ul,
+	.docs-sidebar.open ul,
+	#docs-sidebar.open ul {
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		align-items: center;
+		padding-left: 0;
+	}
+
+	/* top-level sections centered */
+	body.sidebar-open .docs-sidebar > ul > li,
+	.docs-sidebar.open > ul > li,
+	#docs-sidebar.open > ul > li {
+		text-align: center;
+		width: 100%;
+		max-width: 720px;
+	}
+
+	body.sidebar-open .docs-sidebar a,
+	.docs-sidebar.open a,
+	#docs-sidebar.open a {
+		font-size: 1.18rem;
+		display: inline-block;
+		padding: 0.4rem 1rem;
+		border-radius: 6px;
+	}
+
+	/* center the social icons shown in the sidebar overlay */
+	body.sidebar-open .docs-sidebar .sidebar-socials,
+	.docs-sidebar.open .sidebar-socials,
+	#docs-sidebar.open .sidebar-socials {
+		justify-content: center;
+	}
 }
 .docs-sidebar a {
 	color: var(--primary);
