@@ -345,7 +345,7 @@
 	--text: #ffffff;
 	--text-muted: #a094c7;
 	--accent: #6b4595;
-	--header-height: 56px; /* slightly smaller header spacing */
+	--header-height: 48px; /* tuned smaller to match actual header height */
 }
 
 * {
