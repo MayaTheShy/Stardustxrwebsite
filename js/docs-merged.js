@@ -18,6 +18,8 @@ async function loadDocMerged() {
   const file = 'docs/' + hash + '.md';
   const container = document.getElementById('content');
   if (!container) return;
+  // Remove any previous commit panel so it doesn't persist between pages.
+  document.querySelectorAll('.doc-commit-panel').forEach((el) => el.remove());
   try {
     const res = await fetch(file);
     if (!res.ok) {
