@@ -38,7 +38,13 @@
   wrap.appendChild(caption);
   overlay.appendChild(spinner);
   overlay.appendChild(wrap);
-    document.body.appendChild(overlay);
+    // Append to the documentElement when possible to reduce chances of
+    // being clipped by a stacking context on <body> or other ancestors.
+    try {
+      (document.documentElement || document.body).appendChild(overlay);
+    } catch (e) {
+      document.body.appendChild(overlay);
+    }
 
     // close overlay when clicking outside the image (on the overlay)
     overlay.addEventListener('click', function (ev) {
