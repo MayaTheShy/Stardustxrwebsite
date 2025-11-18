@@ -23,6 +23,8 @@
 		height: calc(100vh - var(--header-height));
 		width: 80vw;
 		max-width: 400px;
+		 --star-tile-size-small: 240px; /* larger tiles for ~10x less density */
+		 --star-tile-size-large: 360px;
 		background: var(--background-light);
 		box-shadow: 2px 0 16px 0 rgba(0,0,0,0.18);
 		transform: translateX(-100%);
@@ -31,11 +33,14 @@
 		margin: 0;
 		padding-top: 2.5rem;
 		overflow-y: auto;
-		display: block;
+			/* scale up tile sizes to reduce repetition (roughly 10x fewer repeats)
+			   Adjust --star-tile-size-small and --star-tile-size-large to tune density. */
+			background-size: var(--star-tile-size-small) var(--star-tile-size-small), var(--star-tile-size-large) var(--star-tile-size-large);
 	}
-	.docs-sidebar.open { transform: translateX(0); }
+			opacity: 0.12; /* much subtler - fewer dots visible */
 
-	.sidebar-toggle { display: block !important; z-index: 2400; }
+			/* offset the second tile to break patterning; offset scaled with tile size */
+			background-position: 0 0, calc(var(--star-tile-size-small) / 20) calc(var(--star-tile-size-small) / 40);
 
 	.logo-container { margin-left: 68px; }
 	.header-content { padding-left: 68px; }
@@ -520,12 +525,12 @@ body::before {
 		background-image:
 			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='1.8' cy='3.6' r='0.55' fill='%23FFE44D' fill-opacity='0.92'/%3E%3Ccircle cx='5.9' cy='8.4' r='0.45' fill='%23FDFDFD' fill-opacity='0.86'/%3E%3Ccircle cx='9.2' cy='12.7' r='0.5' fill='%23BFD9FF' fill-opacity='0.72'/%3E%3Ccircle cx='14.3' cy='5.8' r='0.5' fill='%23FFE44D' fill-opacity='0.78'/%3E%3Ccircle cx='18.6' cy='17.3' r='0.44' fill='%23BFE0FF' fill-opacity='0.64'/%3E%3Ccircle cx='22.6' cy='9.1' r='0.32' fill='%23FFF8E1' fill-opacity='0.56'/%3E%3Ccircle cx='12' cy='3.2' r='0.4' fill='%23FFFFFF' fill-opacity='0.6'/%3E%3Ccircle cx='19.8' cy='6.2' r='0.36' fill='%23BFD9FF' fill-opacity='0.55'/%3E%3C/svg%3E"),
 			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='2.5' cy='6' r='0.4' fill='%23FFF6D1' fill-opacity='0.92'/%3E%3Ccircle cx='7.1' cy='3.3' r='0.3' fill='%23FFFFFF' fill-opacity='0.9'/%3E%3Ccircle cx='11.6' cy='17' r='0.4' fill='%23BFE0FF' fill-opacity='0.68'/%3E%3Ccircle cx='15.7' cy='8' r='0.36' fill='%23FFE8A6' fill-opacity='0.7'/%3E%3Ccircle cx='20.2' cy='13.6' r='0.28' fill='%23DAEFFF' fill-opacity='0.62'/%3E%3C/svg%3E");
-		/* slightly larger tiles to reduce visible grid artifacts; smaller opacity */
-		background-size: 28px 28px, 42px 42px;
-		background-repeat: repeat, repeat;
-		/* offset second tile slightly to randomize tiling */
-		background-position: 0 0, 12px 7px;
-		opacity: 0.18; /* much subtler */
+	/* scale up tiles to reduce repetition; variable-driven so you can tune */
+	background-size: var(--star-tile-size-small) var(--star-tile-size-small), var(--star-tile-size-large) var(--star-tile-size-large);
+	background-repeat: repeat, repeat;
+	/* offset second tile slightly to randomize tiling */
+	background-position: 0 0, calc(var(--star-tile-size-small) / 18) calc(var(--star-tile-size-small) / 36);
+	opacity: 0.12; /* much subtler */
 		/* subtle blur for a soft feel, but not enough to create halo artifacts */
 		filter: drop-shadow(0 0 0.06px rgba(255,228,77,0.035));
 		animation: none;
