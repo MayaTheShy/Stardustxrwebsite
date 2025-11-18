@@ -101,11 +101,26 @@ window.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('sidebar-overlay');
   if (sidebar && toggle) {
     toggle.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-      const isOpen = sidebar.classList.contains('open');
-      toggle.setAttribute('aria-expanded', isOpen);
-      document.body.classList.toggle('sidebar-open', isOpen);
-      if (overlay) overlay.classList.toggle('active', isOpen);
+      // Toggle open state on the sidebar. On the homepage the sidebar is
+      // hidden via an inline `display: none` (set by loadDocMerged). When
+      // the user clicks the hamburger we should clear that inline value so
+      // the overlay can be shown. When closing, re-hide the sidebar only if
+      // no docs are loaded (location.hash is empty) so we don't interfere
+      // with the normal docs view.
+      const nowOpen = sidebar.classList.toggle('open');
+      if (nowOpen) {
+        // Remove any inline 'display: none' (set by loadDocMerged) so the CSS
+        // overlay can take effect (body.sidebar-open rules). This shows the
+        // sidebar even while on the homepage.
+        try { sidebar.style.display = ''; } catch (e) { /* ignore */ }
+      } else {
+        // When closing while on the homepage, hide it again so the docs
+        // panel doesn't take space if the user opens it from the header.
+        if (!location.hash) sidebar.style.display = 'none';
+      }
+      toggle.setAttribute('aria-expanded', nowOpen);
+      document.body.classList.toggle('sidebar-open', nowOpen);
+      if (overlay) overlay.classList.toggle('active', nowOpen);
     });
     // Close sidebar when a link is clicked (mobile UX)
     sidebar.addEventListener('click', (e) => {
@@ -114,6 +129,9 @@ window.addEventListener('DOMContentLoaded', () => {
         toggle.setAttribute('aria-expanded', 'false');
         document.body.classList.remove('sidebar-open');
         if (overlay) overlay.classList.remove('active');
+        // When the user clicks a link from the homepage, hide the docs
+        // panel again so the content returns to the homepage view.
+        if (!location.hash) sidebar.style.display = 'none';
       }
     });
     if (overlay) {
@@ -122,6 +140,7 @@ window.addEventListener('DOMContentLoaded', () => {
         toggle.setAttribute('aria-expanded', 'false');
         document.body.classList.remove('sidebar-open');
         overlay.classList.remove('active');
+        if (!location.hash) sidebar.style.display = 'none';
       });
     }
     // Remove sidebar-open and overlay if window is resized to desktop
@@ -131,6 +150,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.body.classList.remove('sidebar-open');
         if (overlay) overlay.classList.remove('active');
         toggle.setAttribute('aria-expanded', 'false');
+        if (!location.hash) sidebar.style.display = 'none';
       }
     });
 

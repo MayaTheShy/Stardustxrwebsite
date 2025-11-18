@@ -318,21 +318,24 @@ body.sidebar-open .docs-sidebar li > ul {
 		justify-content: center;
 	}
 
-	/* Center all clickable items in the overlay so links, icons and
-	   any cloned social links are centered beneath the heading. We
-	   set anchors to inline-block + auto margins for robust centering. */
-	body.sidebar-open .docs-sidebar li,
-	.docs-sidebar.open li,
-	#docs-sidebar.open li {
+	/* Center only the top-level items in the overlay; keep nested lists
+	   left-aligned for readability. We select direct children of the
+	   main sidebar list. */
+	body.sidebar-open .docs-sidebar > ul > li,
+	.docs-sidebar.open > ul > li,
+	#docs-sidebar.open > ul > li {
 		text-align: center;
 	}
 
-	body.sidebar-open .docs-sidebar li a,
-	.docs-sidebar.open li a,
-	#docs-sidebar.open li a {
+	/* Make the anchor/button for top-level items center by making them
+	   inline-block and using auto margins. This keeps nested anchors
+	   inside sublists left-aligned. */
+	body.sidebar-open .docs-sidebar > ul > li a,
+	.docs-sidebar.open > ul > li a,
+	#docs-sidebar.open > ul > li a {
 		display: inline-block;
-		margin: 0.12rem auto; /* small vertical spacing plus centering */
-		padding-left: 0.6rem; /* keep a little horizontal padding for icons */
+		margin: 0.18rem auto;
+		padding-left: 0.6rem;
 		padding-right: 0.6rem;
 	}
 }
