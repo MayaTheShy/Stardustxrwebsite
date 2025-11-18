@@ -606,6 +606,24 @@ footer {
 		text-align: center;
 	}
 
+	/* At smaller widths we want the logo and title centered. Remove the
+	   padding/margin applied at narrower-but-not-tiny sizes and center the
+	   logo container. Keep the hamburger absolute on the left so users can
+	   still open the docs menu. */
+	.logo-container {
+		margin-left: 0; /* override earlier margin-left for smaller screens */
+		justify-content: center; /* center logo + title */
+		text-align: center;
+	}
+
+	.header-content {
+		padding-left: 0; /* remove the offset added for 900px breakpoint */
+	}
+
+	.logo-container h1 {
+		margin: 0; /* keep title centered */
+	}
+
 	/* Keep header a consistent height on mobile so toggling the tagline
 	   doesn't cause the whole page to jump. This matches typical mobile
 	   header sizes across our breakpoints. */
