@@ -22,9 +22,7 @@
 		top: var(--header-height); /* keep below the sticky header */
 		height: calc(100vh - var(--header-height));
 		width: 80vw;
-		max-width: 400px;
-		 --star-tile-size-small: 240px; /* larger tiles for ~10x less density */
-		 --star-tile-size-large: 360px;
+	max-width: 400px;
 		background: var(--background-light);
 		box-shadow: 2px 0 16px 0 rgba(0,0,0,0.18);
 		transform: translateX(-100%);
@@ -32,15 +30,9 @@
 		z-index: 2002;
 		margin: 0;
 		padding-top: 2.5rem;
-		overflow-y: auto;
-			/* scale up tile sizes to reduce repetition (roughly 10x fewer repeats)
-			   Adjust --star-tile-size-small and --star-tile-size-large to tune density. */
-			background-size: var(--star-tile-size-small) var(--star-tile-size-small), var(--star-tile-size-large) var(--star-tile-size-large);
+		  overflow-y: auto;
 	}
-			opacity: 0.12; /* much subtler - fewer dots visible */
-
-			/* offset the second tile to break patterning; offset scaled with tile size */
-			background-position: 0 0, calc(var(--star-tile-size-small) / 20) calc(var(--star-tile-size-small) / 40);
+			/* cleaned up misplaced star options; see body::before for global star settings */
 
 	.logo-container { margin-left: 68px; }
 	.header-content { padding-left: 68px; }
@@ -463,6 +455,8 @@
 	/* Cute overlay gradient for mobile sidebar */
     --overlay-color-a: rgba(107,69,149,0.9);
 	--overlay-color-b: rgba(255,228,77,0.85);
+	--star-tile-size-small: 600px; /* much larger tiles: fewer repeats (~1/10) */
+	--star-tile-size-large: 900px;
 	/* Optional nebula / starfield background image - place one in /img/bg/nebula.webp
 	   or use your own. If missing, the CSS gradient-based nebula will be used. */
 	 /* point to the SVG nebula tile we added; SVG lets us keep the file small
@@ -529,8 +523,9 @@ body::before {
 	background-size: var(--star-tile-size-small) var(--star-tile-size-small), var(--star-tile-size-large) var(--star-tile-size-large);
 	background-repeat: repeat, repeat;
 	/* offset second tile slightly to randomize tiling */
-	background-position: 0 0, calc(var(--star-tile-size-small) / 18) calc(var(--star-tile-size-small) / 36);
-	opacity: 0.12; /* much subtler */
+		/* randomize position of second layer using percentages (avoids px-grid artifacts) */
+		background-position: 0 0, 13% 9%;
+		opacity: 0.06; /* much subtler; ~1/10th density of original */
 		/* subtle blur for a soft feel, but not enough to create halo artifacts */
 		filter: drop-shadow(0 0 0.06px rgba(255,228,77,0.035));
 		animation: none;
