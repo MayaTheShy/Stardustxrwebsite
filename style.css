@@ -366,12 +366,24 @@ body {
 header {
 	background: var(--background-light);
 	padding: 0.8rem 2rem;
-	position: fixed; /* keep header fixed at the top for reliability */
-	left: 0;
-	right: 0;
-	top: 0;
-	z-index: 3000; /* keep header above overlay */
-	box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+	position: relative; /* default: inline flow for mobile */
+	z-index: 2200; /* keep header above overlay */
+}
+
+/* Desktop: header should be fixed to the top */
+@media (min-width: 901px) {
+	header {
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		z-index: 3000;
+		box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+	}
+	/* add padding to the main content so desktop header doesn't cover it */
+	main {
+		padding-top: calc(var(--header-height) + 0.25rem);
+	}
 }
 
 .header-content {
