@@ -5,6 +5,9 @@
 	flex-direction: row;
 	width: 100%;
 	height: 100%;
+	justify-content: flex-start;
+	align-items: flex-start;
+	gap: 1.6rem;
 }
 
 /* default: hide on desktop so menu only shows on mobile */
@@ -106,7 +109,7 @@
 	margin-top: 1.5rem;
 	font-size: 1.04rem;
 	position: sticky;
-	top: 2rem;
+	top: calc(1rem + 64px); /* give space for the header above */
 	height: fit-content;
 }
 .docs-sidebar h2 {
