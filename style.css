@@ -897,7 +897,8 @@ footer {
 		display: none;
 		align-items: center;
 		justify-content: center;
-		z-index: 99999; /* above header and sidebar */
+		z-index: 2147483647 !important; /* ensure overlay is above everything */
+		pointer-events: auto; /* allow clicks to pass to overlay */
 		/* ensure overlay is visible even if other stacking contexts exist */
 		backdrop-filter: blur(2px);
 	}
