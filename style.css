@@ -37,8 +37,7 @@
 		overflow-y: auto;
 		display: block;
 	}
-	.docs-sidebar.open {
-		transform: translateX(0);
+            
 	}
 	.sidebar-toggle {
 		display: block !important;
@@ -50,7 +49,7 @@
 		.logo-container { margin-left: 68px; }
 		.header-content { padding-left: 68px; }
 	}
-
+			top: calc(1rem + var(--header-height)); /* give space for the sticky header above */
 	/* keep the header content away from the left edge on mobile so nothing overlaps */
 	/* header padding on mobile - prefer keeping it only inside the mobile media rule */
 	#docs-sidebar:not(.open) {
