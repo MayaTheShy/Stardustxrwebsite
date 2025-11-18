@@ -16,6 +16,12 @@
 @media (max-width: 900px) {
 	.docs-flex { flex-direction: column; }
 
+	/* If the sidebar is in the middle of collapsing we don't want the docs
+	   layout to switch to column until the animation completes — this
+	   prevents the main content from getting pushed down. We add this rule
+	   to lock the layout during the animation. */
+	body.docs-collapsing .docs-flex { flex-direction: row; }
+
 	/* show the hamburger on small screens */
 	.sidebar-toggle { display: inline-flex; }
 
@@ -76,7 +82,15 @@
 			justify-content: center;
 	}
 
-	#docs-sidebar:not(.open) { display: none; }
+	/* Instead of instantly removing the sidebar from the DOM when the
+	   viewport becomes mobile Sized, hide it visually with transform and
+	   opacity so the collapse is animated. We keep it off-screen via
+	   translateX and prevent pointer events while hidden. */
+	#docs-sidebar:not(.open) {
+		transform: translateX(-100%);
+		opacity: 0;
+		pointer-events: none;
+	}
 	body.sidebar-open .sidebar-overlay { display: block; }
 }
 
@@ -151,6 +165,24 @@
 		transform: translateX(0); /* ensure it's visible when open */
 		transition: transform 300ms cubic-bezier(.2,.8,.2,1), width 300ms ease;
 		overflow-y: auto;
+	}
+
+	/* When the window is resized from wide to narrow, the JS adds the
+	   `collapsing` class so we can gracefully slide the sidebar away. */
+	.docs-sidebar.collapsing {
+		/* Make the collapsing element fixed so it doesn't affect the document
+		   flow (prevents the main content from jumping). Keep the same
+		   position/size as the overlay so the animation is visually consistent. */
+		position: fixed;
+		left: 0;
+		top: var(--header-height);
+		width: 100vw;
+		max-width: none;
+		height: calc(100vh - var(--header-height));
+		transform: translateX(-100%);
+		opacity: 0;
+		pointer-events: none;
+		z-index: 3002; /* match overlay ordering */
 	}
 
 	/* Make the overlay (mobile hamburger) content larger and centered while
@@ -248,6 +280,10 @@ body.sidebar-open .docs-sidebar li > ul {
 	position: sticky;
 	top: calc(0.6rem + var(--header-height)); /* keep a smaller gap above the sidebar to match the smaller header */
 	height: fit-content;
+	/* Allow an animated collapse/slide when viewport changes. We include
+	   transform and opacity so transitions fire when the media query hides
+	   the sidebar on small screens. */
+	transition: transform 300ms cubic-bezier(.4,0,.2,1), opacity 240ms ease;
 }
 .docs-sidebar h2 {
 	color: var(--primary);
@@ -1148,11 +1184,17 @@ footer {
 	}
 
 	/* Docs sidebar and content mobile improvements */
+	/* Keep the docs sidebar out of the document flow on small screens so
+	   opening/closing it doesn't push content down. The overlay is fixed and
+	   visually separate from the main content for mobile. */
 	.docs-sidebar {
-		position: static;
-		min-width: unset;
-		max-width: 100vw;
-		margin: 1rem 0;
+		position: fixed;
+		left: 0;
+		top: var(--header-height);
+		width: 100vw;
+		max-width: none;
+		height: calc(100vh - var(--header-height));
+		margin: 0;
 		padding: 1.2rem 0.7rem;
 		font-size: 1rem;
 		box-shadow: none;

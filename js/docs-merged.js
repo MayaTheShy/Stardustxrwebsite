@@ -7,13 +7,22 @@ async function loadDocMerged() {
   if (!hash) {
     // Show homepage, hide docs
     if (homepageSections) homepageSections.style.display = '';
-    if (sidebar) sidebar.style.display = 'none';
+    if (sidebar) {
+      // Keep sidebar in the DOM but let CSS hide it using the .open state
+      // so transitions are possible. Avoid inline display changes that
+      // cause layout reflow when the viewport changes.
+      sidebar.classList.remove('open');
+    }
     if (docsContentWrap) docsContentWrap.style.display = 'none';
     return;
   }
   // Show docs, hide homepage
   if (homepageSections) homepageSections.style.display = 'none';
-  if (sidebar) sidebar.style.display = '';
+  if (sidebar) {
+    // Ensure the sidebar is visible when loading a doc; rely on CSS to
+    // show it (it will be shown when .open gets added from the hamburger)
+    sidebar.classList.remove('collapsing');
+  }
   if (docsContentWrap) docsContentWrap.style.display = '';
   const file = 'docs/' + hash + '.md';
   const container = document.getElementById('content');
@@ -108,15 +117,14 @@ window.addEventListener('DOMContentLoaded', () => {
       // no docs are loaded (location.hash is empty) so we don't interfere
       // with the normal docs view.
       const nowOpen = sidebar.classList.toggle('open');
-      if (nowOpen) {
-        // Remove any inline 'display: none' (set by loadDocMerged) so the CSS
-        // overlay can take effect (body.sidebar-open rules). This shows the
-        // sidebar even while on the homepage.
-        try { sidebar.style.display = ''; } catch (e) { /* ignore */ }
+        if (nowOpen) {
+          // Ensure .open is added so mobile overlay rules show the sidebar.
+          // We avoid changing inline display and let CSS manage it for
+          // predictable transitions.
       } else {
-        // When closing while on the homepage, hide it again so the docs
-        // panel doesn't take space if the user opens it from the header.
-        if (!location.hash) sidebar.style.display = 'none';
+          // When closing while on the homepage, make sure .open is removed so
+          // the sidebar is visually hidden and doesn't affect layout.
+          if (!location.hash) sidebar.classList.remove('open');
       }
       toggle.setAttribute('aria-expanded', nowOpen);
       document.body.classList.toggle('sidebar-open', nowOpen);
@@ -129,9 +137,9 @@ window.addEventListener('DOMContentLoaded', () => {
         toggle.setAttribute('aria-expanded', 'false');
         document.body.classList.remove('sidebar-open');
         if (overlay) overlay.classList.remove('active');
-        // When the user clicks a link from the homepage, hide the docs
-        // panel again so the content returns to the homepage view.
-        if (!location.hash) sidebar.style.display = 'none';
+          // When the user clicks a link from the homepage, hide the docs
+          // panel again so the content returns to the homepage view.
+          if (!location.hash) sidebar.classList.remove('open');
       }
     });
     if (overlay) {
@@ -140,18 +148,56 @@ window.addEventListener('DOMContentLoaded', () => {
         toggle.setAttribute('aria-expanded', 'false');
         document.body.classList.remove('sidebar-open');
         overlay.classList.remove('active');
-        if (!location.hash) sidebar.style.display = 'none';
+          if (!location.hash) sidebar.classList.remove('open');
       });
     }
     // Remove sidebar-open and overlay if window is resized to desktop
+    // Track the viewport width to detect when we cross the mobile breakpoint
+    // and animate the sidebar collapsing when we go from wide -> narrow.
+    let _lastWindowWidth = window.innerWidth;
     window.addEventListener('resize', () => {
       if (window.innerWidth > 900) {
         sidebar.classList.remove('open');
         document.body.classList.remove('sidebar-open');
         if (overlay) overlay.classList.remove('active');
         toggle.setAttribute('aria-expanded', 'false');
-        if (!location.hash) sidebar.style.display = 'none';
+          if (!location.hash) sidebar.classList.remove('open');
       }
+
+      // Animate collapse when crossing from desktop to mobile. We add a
+      // 'collapsing' class which can be used to temporarily style the
+      // transition; CSS has a transform/opacity transition on .docs-sidebar.
+      const wasWide = _lastWindowWidth > 900;
+      const isNowNarrow = window.innerWidth <= 900;
+      if (wasWide && isNowNarrow) {
+        // Only animate if the sidebar is currently visible.
+        try {
+          const visible = sidebar && getComputedStyle(sidebar).display !== 'none';
+          if (visible) {
+            // Prevent the docs/main layout from switching to column during the
+            // short collapse animation. This avoids pushing the content down.
+            document.body.classList.add('docs-collapsing');
+            sidebar.classList.add('collapsing');
+            // Keep the docs layout locked while the animation runs.
+            document.body.classList.add('docs-collapsing');
+
+            // Wait for the transitionend event so layout changes occur
+            // immediately after the visual collapse — no arbitrary timeout
+            // to avoid visible delays. Use `once: true` to run only once.
+            const tidyUp = (ev) => {
+              // Accept transform/opacity transitions only
+              if (ev && ev.propertyName && !(ev.propertyName === 'transform' || ev.propertyName === 'opacity')) return;
+              sidebar.classList.remove('collapsing');
+              document.body.classList.remove('docs-collapsing');
+                if (!location.hash) sidebar.classList.remove('open');
+            };
+            sidebar.addEventListener('transitionend', tidyUp, { once: true });
+            // Fallback if transitionend doesn't fire (older browsers / cancel)
+            setTimeout(tidyUp, 600);
+          }
+        } catch (e) { /* ignore computed style errors on some browsers */ }
+      }
+      _lastWindowWidth = window.innerWidth;
     });
 
     // Move social links from the header into the sidebar on small screens
