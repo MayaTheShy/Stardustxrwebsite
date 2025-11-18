@@ -88,6 +88,15 @@
       caption.textContent = '';
       spinner.style.display = '';
       overlay.setAttribute('aria-hidden', 'true');
+      try {
+        if (overlayContainer && overlay.parentNode === overlayContainer) {
+          overlayContainer.removeChild(overlay);
+        }
+        if (overlayContainer && overlayContainer.parentNode) {
+          overlayContainer.parentNode.removeChild(overlayContainer);
+        }
+        overlayContainer = null;
+      } catch (err) { /* ignore */ }
     }
 
     function escClose(e) {
@@ -102,6 +111,24 @@
         img.src = src;
         img.alt = alt || '';
         caption.textContent = alt || '';
+    // create an on-demand top-level container so we don't permanently
+    // alter the page stacking context (this prevents header layout issues)
+    if (!overlayContainer) {
+      overlayContainer = document.createElement('div');
+      overlayContainer.id = 'stardust-overlay-root';
+      overlayContainer.style.position = 'fixed';
+      overlayContainer.style.top = '0';
+      overlayContainer.style.left = '0';
+      overlayContainer.style.width = '100%';
+      overlayContainer.style.height = '100%';
+      overlayContainer.style.zIndex = '2147483647';
+      overlayContainer.style.pointerEvents = 'none';
+    }
+    if (!overlay.parentNode || overlay.parentNode !== overlayContainer) {
+      overlayContainer.appendChild(overlay);
+    }
+    if (!overlayContainer.parentNode) document.body.appendChild(overlayContainer);
+    overlay.style.pointerEvents = 'auto';
     overlay.style.display = 'flex';
     overlay.setAttribute('aria-hidden', 'false');
         // Whether to allow scrolling for very tall images: we hide background scroll
