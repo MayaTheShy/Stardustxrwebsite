@@ -125,24 +125,28 @@ window.addEventListener('DOMContentLoaded', () => {
     const rects = tagline.getClientRects();
     const wrapped = rects && rects.length > 1;
 
-    // Check position relative to the logo/title to detect 'moved-to-next-line'
-    const logo = document.querySelector('.logo-container');
+    // Prefer width-based detection: measure if the tagline's required width
+    // plus the logo and nav widths would fit in the header. This avoids
+    // flipping when the tagline gets moved out of the flow by CSS.
     let pushedDown = false;
     try {
-      if (logo) {
-        const tagRect = tagline.getBoundingClientRect();
-        const logoRect = logo.getBoundingClientRect();
-        // If the tagline's top is greater than the logo/top by a threshold,
-        // it means the tagline has been placed on its own row. We use a
-        // tolerance to avoid tiny pixel jitters during resize.
-        const threshold = Math.max(8, Math.round(logoRect.height / 3));
-        pushedDown = tagRect.top > (logoRect.top + threshold);
+      const header = document.querySelector('.header-content');
+      const logo = document.querySelector('.logo-container');
+      const nav = document.querySelector('.nav-right');
+      if (header && logo && nav) {
+        const headerWidth = header.clientWidth;
+        const logoWidth = logo.offsetWidth;
+        const navWidth = nav.offsetWidth;
+        const gap = 32; // conservatively account for flex gap & padding
+        // Use scrollWidth to get the natural width the tagline needs
+        const tagNeeded = tagline.scrollWidth;
+        pushedDown = (logoWidth + tagNeeded + navWidth + gap) > headerWidth;
       }
     } catch (e) {
       pushedDown = false;
     }
 
-    const shouldHide = wrapped || pushedDown;
+  const shouldHide = wrapped || pushedDown;
 
     // Avoid toggling repeatedly for tiny layout changes. Only change after
     // the state is stable for a short period.

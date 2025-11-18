@@ -606,6 +606,13 @@ footer {
 		text-align: center;
 	}
 
+	/* Keep header a consistent height on mobile so toggling the tagline
+	   doesn't cause the whole page to jump. This matches typical mobile
+	   header sizes across our breakpoints. */
+	.header-content {
+		min-height: 72px;
+	}
+
 	nav {
 		margin: 0;
 	}
@@ -666,6 +673,17 @@ footer {
 	}
 	body, html {
 		overflow-x: hidden;
+	}
+}
+
+/* When the tagline is hidden, move it out of the document flow only on
+   narrow screens; combined with min-height above this prevents the header
+   from changing size. Using left:-9999px avoids any layout/scroll issues.
+*/
+@media (max-width: 768px) {
+	.tagline-hidden {
+		position: absolute;
+		left: -9999px;
 	}
 }
 
