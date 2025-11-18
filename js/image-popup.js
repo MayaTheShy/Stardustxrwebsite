@@ -3,9 +3,10 @@
   const createOverlay = () => {
     const overlay = document.createElement('div');
     overlay.className = 'image-popup-overlay';
-    overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
     overlay.style.display = 'none';
+  overlay.setAttribute('aria-hidden', 'true');
 
   // window frame to feel like a native window
   const wrap = document.createElement('div');
@@ -27,10 +28,15 @@
     caption.className = 'image-popup-caption';
     caption.setAttribute('aria-hidden', 'true');
 
+  const spinner = document.createElement('div');
+  spinner.className = 'image-popup-spinner';
+  spinner.setAttribute('aria-hidden', 'true');
+
   header.appendChild(close);
   wrap.appendChild(header);
   wrap.appendChild(img);
   wrap.appendChild(caption);
+  overlay.appendChild(spinner);
   overlay.appendChild(wrap);
     document.body.appendChild(overlay);
 
@@ -51,6 +57,8 @@
       document.removeEventListener('keydown', escClose);
       img.src = '';
       caption.textContent = '';
+      spinner.style.display = '';
+      overlay.setAttribute('aria-hidden', 'true');
     }
 
     function escClose(e) {
@@ -65,13 +73,16 @@
         img.src = src;
         img.alt = alt || '';
         caption.textContent = alt || '';
-        overlay.style.display = 'flex';
+    overlay.style.display = 'flex';
+    overlay.setAttribute('aria-hidden', 'false');
         // Whether to allow scrolling for very tall images: we hide background scroll
         document.body.style.overflow = 'hidden';
         // Wait a frame then add class so CSS transition runs
         requestAnimationFrame(() => overlay.classList.add('open'));
         document.addEventListener('keydown', escClose);
         // Once the image loads, attempt to display it at native resolution
+        // show spinner while the image is loading; hide it on success/failure
+        spinner.style.display = 'block';
         img.onload = function () {
           // compute available area for the image with margins
           const margin = 32; // px
@@ -95,6 +106,12 @@
           setTimeout(() => {
             try { close.focus(); } catch (err) { /* ignore */ }
           }, 50);
+          // hide spinner when ready
+          spinner.style.display = 'none';
+        };
+        img.onerror = function () {
+          // ensure spinner hides on error and let user close
+          spinner.style.display = 'none';
         };
         // move keyboard focus to the close button for accessibility
         close.setAttribute('tabindex', '0');

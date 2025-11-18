@@ -897,7 +897,9 @@ footer {
 		display: none;
 		align-items: center;
 		justify-content: center;
-		z-index: 5000; /* above header and sidebar */
+		z-index: 99999; /* above header and sidebar */
+		/* ensure overlay is visible even if other stacking contexts exist */
+		backdrop-filter: blur(2px);
 	}
 	.image-popup-overlay.open {
 		display: flex;
@@ -914,10 +916,30 @@ footer {
 		background: linear-gradient(180deg, rgba(24,21,33,0.96), rgba(20,18,30,0.96));
 		border-radius: 10px;
 		padding: 10px 12px 18px 12px;
-		border: 1px solid rgba(255,255,255,0.04);
+		border: 1px solid rgba(255,255,255,0.12);
 		box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 		position: relative;
 	}
+
+	/* small loading indicator shown while the image loads */
+	.image-popup-spinner {
+		width: 44px;
+		height: 44px;
+		border-radius: 999px;
+		border: 4px solid rgba(255,255,255,0.1);
+		border-top-color: rgba(255,255,255,0.4);
+		animation: spin 0.9s linear infinite;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 999999; /* above the window */
+	}
+
+@keyframes spin {
+0% { transform: translate(-50%, -50%) rotate(0deg); }
+100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
 	.image-popup-img {
 		/* show image at its native size if it fits, otherwise scale down but keep margin */
 		width: auto;
@@ -959,7 +981,6 @@ footer {
 
 	/* Allow opt-out of popup by adding .no-popup to an image */
 	img.no-popup { cursor: default; }
-}
 .image-popup-header {
 	width: 100%;
 	height: 36px;
