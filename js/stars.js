@@ -2,7 +2,9 @@
 // Inspired by semdeck CodePen: https://codepen.io/semdeck/pen/abQBwKN
 
 (function() {
-  const STAR_COUNT = 55; // small to medium
+  // Use a CSS property as the primary way to tune density; fallback to 120
+  const cssCount = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--star-count'), 10);
+  const STAR_COUNT = Number.isFinite(cssCount) && cssCount > 0 ? cssCount : 120;
   const STAR_CONTAINER_ID = 'stars';
   const SHOOT_INTERVAL = 8000; // ms
 
@@ -50,6 +52,8 @@
 
     // Shooting stars on interval, but respect reduced motion
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // create one immediately for visual feedback
+      createShootingStar(container);
       setInterval(() => createShootingStar(container), SHOOT_INTERVAL + Math.random() * 4000);
     }
   }

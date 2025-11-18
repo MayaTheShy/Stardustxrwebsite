@@ -510,6 +510,8 @@
 	--overlay-color-b: rgba(255,228,77,0.85);
 	--star-tile-size-small: 600px; /* much larger tiles: fewer repeats (~1/10) */
 	--star-tile-size-large: 900px;
+	/* Controls for dynamic star layer */
+	--star-count: 120; /* Number of DOM stars in the dynamic layer (increase for denser sky) */
 	/* Optional nebula / starfield background image - place one in /img/bg/nebula.webp
 	   or use your own. If missing, the CSS gradient-based nebula will be used. */
 	 /* point to the SVG nebula tile we added; SVG lets us keep the file small
