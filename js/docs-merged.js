@@ -112,25 +112,64 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   // Hide the tagline when it would wrap to more than one line
   const tagline = document.querySelector('.tagline');
+  // Debounced, tolerant tagline toggling: prevents flicker caused by tiny
+  // layout shifts during resize by requiring short stability and using a threshold.
+  let _taglineDebounce = null;
+  let _pendingTaglineState = null;
+  let _lastAppliedTaglineState = null;
   function updateTagline() {
     if (!tagline) return;
-    // getClientRects length > 1 means it rendered on multiple lines
+    // If the tagline itself wraps to multiple lines, or it gets pushed
+    // down below the logo/title (which happens when there isn't room
+    // for the tagline to be on the same row), hide it.
     const rects = tagline.getClientRects();
     const wrapped = rects && rects.length > 1;
-    if (wrapped) {
-      tagline.classList.add('tagline-hidden');
-      tagline.setAttribute('aria-hidden', 'true');
-    } else {
-      tagline.classList.remove('tagline-hidden');
-      tagline.removeAttribute('aria-hidden');
+
+    // Check position relative to the logo/title to detect 'moved-to-next-line'
+    const logo = document.querySelector('.logo-container');
+    let pushedDown = false;
+    try {
+      if (logo) {
+        const tagRect = tagline.getBoundingClientRect();
+        const logoRect = logo.getBoundingClientRect();
+        // If the tagline's top is greater than the logo/top by a threshold,
+        // it means the tagline has been placed on its own row. We use a
+        // tolerance to avoid tiny pixel jitters during resize.
+        const threshold = Math.max(8, Math.round(logoRect.height / 3));
+        pushedDown = tagRect.top > (logoRect.top + threshold);
+      }
+    } catch (e) {
+      pushedDown = false;
     }
+
+    const shouldHide = wrapped || pushedDown;
+
+    // Avoid toggling repeatedly for tiny layout changes. Only change after
+    // the state is stable for a short period.
+    // If we already have the same desired state scheduled, bail.
+    if (shouldHide === _pendingTaglineState) return;
+    _pendingTaglineState = shouldHide;
+    // schedule the real toggling so quick layout flashes don't cause flicker
+    if (_taglineDebounce) clearTimeout(_taglineDebounce);
+    _taglineDebounce = setTimeout(() => {
+      const hide = _pendingTaglineState;
+      if (hide) {
+        tagline.classList.add('tagline-hidden');
+        tagline.setAttribute('aria-hidden', 'true');
+      } else {
+        tagline.classList.remove('tagline-hidden');
+        tagline.removeAttribute('aria-hidden');
+      }
+      _lastAppliedTaglineState = hide;
+      _taglineDebounce = null;
+    }, 120);
   }
-  // Run on load and on resize; also use ResizeObserver if available for better accuracy
+  // Run on load and on resize; also use ResizeObserver when available.
   updateTagline();
   window.addEventListener('resize', updateTagline);
   if (window.ResizeObserver) {
     try {
-      new ResizeObserver(updateTagline).observe(document.querySelector('.header-content'));
+  new ResizeObserver(updateTagline).observe(document.querySelector('.header-content'));
     } catch (e) { /* ignore, fall back to resize event */ }
   }
 });
