@@ -44,5 +44,15 @@ window.addEventListener('DOMContentLoaded', () => {
         overlay.classList.remove('active');
       });
     }
+
+    // Remove sidebar-open and overlay if window is resized to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        sidebar.classList.remove('open');
+        document.body.classList.remove('sidebar-open');
+        if (overlay) overlay.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 });
