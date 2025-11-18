@@ -1,3 +1,30 @@
+/* Overlay for mobile sidebar */
+.sidebar-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0,0,0,0.45);
+	z-index: 999;
+	transition: opacity 0.2s;
+}
+.sidebar-overlay.active {
+	display: block;
+}
+
+@media (max-width: 900px) {
+	body.sidebar-open main,
+	body.sidebar-open footer {
+		filter: blur(2px) grayscale(0.2);
+		pointer-events: none;
+		user-select: none;
+	}
+	body.sidebar-open .sidebar-overlay {
+		display: block;
+	}
+}
 /* Hamburger menu for docs sidebar */
 .sidebar-toggle {
 	display: none;

@@ -18,18 +18,31 @@ window.addEventListener('load', loadDoc);
 window.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.getElementById('docs-sidebar');
   const toggle = document.getElementById('sidebar-toggle');
+  const overlay = document.getElementById('sidebar-overlay');
   if (sidebar && toggle) {
     toggle.addEventListener('click', () => {
       sidebar.classList.toggle('open');
-      // Optionally, toggle aria-expanded for accessibility
-      toggle.setAttribute('aria-expanded', sidebar.classList.contains('open'));
+      const isOpen = sidebar.classList.contains('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      document.body.classList.toggle('sidebar-open', isOpen);
+      if (overlay) overlay.classList.toggle('active', isOpen);
     });
     // Close sidebar when a link is clicked (mobile UX)
     sidebar.addEventListener('click', (e) => {
       if (e.target.tagName === 'A') {
         sidebar.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('sidebar-open');
+        if (overlay) overlay.classList.remove('active');
       }
     });
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('sidebar-open');
+        overlay.classList.remove('active');
+      });
+    }
   }
 });
