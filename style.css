@@ -14,17 +14,13 @@
 .sidebar-toggle { display: none; }
 
 @media (max-width: 900px) {
-	.docs-flex {
-		flex-direction: column;
-	}
-}
+	.docs-flex { flex-direction: column; }
 
-@media (max-width: 900px) {
 	.docs-sidebar {
 		position: fixed;
 		left: 0;
-		top: 0;
-		height: 100vh;
+		top: var(--header-height); /* keep below the sticky header */
+		height: calc(100vh - var(--header-height));
 		width: 80vw;
 		max-width: 400px;
 		background: var(--background-light);
@@ -37,27 +33,15 @@
 		overflow-y: auto;
 		display: block;
 	}
-            
-	}
-	.sidebar-toggle {
-		display: block !important;
-		z-index: 2003;
-	}
+	.docs-sidebar.open { transform: translateX(0); }
 
-	/* Move the logo right to avoid overlapping the hamburger (mobile only) */
-	@media (max-width: 900px) {
-		.logo-container { margin-left: 68px; }
-		.header-content { padding-left: 68px; }
-	}
-			top: calc(1rem + var(--header-height)); /* give space for the sticky header above */
-	/* keep the header content away from the left edge on mobile so nothing overlaps */
-	/* header padding on mobile - prefer keeping it only inside the mobile media rule */
-	#docs-sidebar:not(.open) {
-		display: none;
-	}
-	body.sidebar-open .sidebar-overlay {
-		display: block;
-	}
+	.sidebar-toggle { display: block !important; z-index: 2400; }
+
+	.logo-container { margin-left: 68px; }
+	.header-content { padding-left: 68px; }
+
+	#docs-sidebar:not(.open) { display: none; }
+	body.sidebar-open .sidebar-overlay { display: block; }
 }
 
 /* Hamburger always above overlay */
@@ -361,6 +345,7 @@
 	--text: #ffffff;
 	--text-muted: #a094c7;
 	--accent: #6b4595;
+	--header-height: 64px;
 }
 
 * {
