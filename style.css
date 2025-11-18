@@ -366,7 +366,8 @@ body {
 header {
 	background: var(--background-light);
 	padding: 1rem 2rem;
-	position: relative; /* allow absolute items inside */
+	position: sticky; /* make header sticky */
+	top: 0;
 	z-index: 2200; /* keep header above overlay */
 }
 
