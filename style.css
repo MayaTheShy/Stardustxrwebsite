@@ -45,8 +45,10 @@
 		z-index: 2003;
 	}
 
-	/* Move the logo right to avoid overlapping the hamburger */
-	.logo-container { margin-left: 68px; }
+	/* Move the logo right to avoid overlapping the hamburger (mobile only) */
+	@media (max-width: 900px) {
+		.logo-container { margin-left: 68px; }
+	}
 
 	/* keep the header content away from the left edge on mobile so nothing overlaps */
 	.header-content { padding-left: 68px; }
