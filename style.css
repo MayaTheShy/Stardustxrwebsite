@@ -317,6 +317,24 @@ body.sidebar-open .docs-sidebar li > ul {
 	#docs-sidebar.open .sidebar-socials {
 		justify-content: center;
 	}
+
+	/* Center all clickable items in the overlay so links, icons and
+	   any cloned social links are centered beneath the heading. We
+	   set anchors to inline-block + auto margins for robust centering. */
+	body.sidebar-open .docs-sidebar li,
+	.docs-sidebar.open li,
+	#docs-sidebar.open li {
+		text-align: center;
+	}
+
+	body.sidebar-open .docs-sidebar li a,
+	.docs-sidebar.open li a,
+	#docs-sidebar.open li a {
+		display: inline-block;
+		margin: 0.12rem auto; /* small vertical spacing plus centering */
+		padding-left: 0.6rem; /* keep a little horizontal padding for icons */
+		padding-right: 0.6rem;
+	}
 }
 .docs-sidebar a {
 	color: var(--primary);
