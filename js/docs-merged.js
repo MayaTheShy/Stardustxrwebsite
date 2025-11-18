@@ -73,5 +73,41 @@ window.addEventListener('DOMContentLoaded', () => {
         toggle.setAttribute('aria-expanded', 'false');
       }
     });
+
+    // Move social links from the header into the sidebar on small screens
+    const headerSocials = Array.from(document.querySelectorAll('.nav-right a.nav-icon, .nav-right a.nav-text'));
+    let sidebarSocials = sidebar.querySelector('.sidebar-socials');
+    if (!sidebarSocials) {
+      sidebarSocials = document.createElement('div');
+      sidebarSocials.className = 'sidebar-socials';
+      // Insert it right after the <h2> heading inside the sidebar
+      const heading = sidebar.querySelector('h2');
+      if (heading && heading.parentNode) heading.insertAdjacentElement('afterend', sidebarSocials);
+      else sidebar.appendChild(sidebarSocials);
+    }
+
+    function syncSocialsToSidebar() {
+      // create clones on mobile, remove clones on desktop
+  if (window.innerWidth <= 900) {
+        // only add if sidebarSocials is empty
+        sidebarSocials.innerHTML = '';
+        headerSocials.forEach((el) => {
+          const clone = el.cloneNode(true);
+          clone.setAttribute('data-cloned', 'true');
+          // ensure the cloned link opens in a new tab like the original
+          sidebarSocials.appendChild(clone);
+        });
+        // Hide header icons from assistive tech to avoid duplicates in mobile menu
+        headerSocials.forEach((el) => el.setAttribute('aria-hidden', 'true'));
+      } else {
+        if (sidebarSocials) sidebarSocials.innerHTML = '';
+        // Make header icons accessible again on desktop
+        headerSocials.forEach((el) => el.removeAttribute('aria-hidden'));
+      }
+    }
+
+    // run once now and on resize so the layout updates with viewport changes
+    syncSocialsToSidebar();
+    window.addEventListener('resize', syncSocialsToSidebar);
   }
 });
