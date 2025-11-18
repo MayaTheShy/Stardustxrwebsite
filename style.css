@@ -600,10 +600,16 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
+	/* Stack header content on mobile and center everything vertically
+	   inside the header so the hamburger, logo and title align. */
+	header { min-height: 72px; }
+
 	.header-content {
 		flex-direction: column;
 		gap: 1rem;
 		text-align: center;
+		justify-content: center; /* vertical center */
+		align-items: center; /* horizontal center */
 	}
 
 	/* At smaller widths we want the logo and title centered. Remove the
@@ -614,11 +620,13 @@ footer {
 		margin-left: 0; /* override earlier margin-left for smaller screens */
 		justify-content: center; /* center logo + title */
 		text-align: center;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
-	.header-content {
-		padding-left: 0; /* remove the offset added for 900px breakpoint */
-	}
+	.header-content { padding-left: 0; /* remove the offset added for 900px breakpoint */ }
 
 	.logo-container h1 {
 		margin: 0; /* keep title centered */
