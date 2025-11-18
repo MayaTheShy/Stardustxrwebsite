@@ -48,10 +48,11 @@
 	/* Move the logo right to avoid overlapping the hamburger (mobile only) */
 	@media (max-width: 900px) {
 		.logo-container { margin-left: 68px; }
+		.header-content { padding-left: 68px; }
 	}
 
 	/* keep the header content away from the left edge on mobile so nothing overlaps */
-	.header-content { padding-left: 68px; }
+	/* header padding on mobile - prefer keeping it only inside the mobile media rule */
 	#docs-sidebar:not(.open) {
 		display: none;
 	}
