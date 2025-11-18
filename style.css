@@ -254,7 +254,8 @@
 	max-width: 900px;
 	/* Match the docs-sidebar top spacing so both start at the same height */
 	margin: var(--docs-top-gap) auto; /* align with .docs-sidebar's margin-top (desktop) */
-	padding: 1.6rem 1.6rem; /* reduce inner padding to make content feel tighter */
+	/* remove top padding so text starts flush with the box edge; keep side/bottom padding */
+	padding: 0 1.6rem 1.6rem;
 	border-radius: 10px;
 	box-shadow: 0 2px 16px 0 rgba(0,0,0,0.12);
 	font-size: 1.08rem;
@@ -273,6 +274,13 @@
 	font-size: 2.2rem;
 	border-bottom: 2px solid var(--accent);
 	padding-bottom: 0.3em;
+}
+
+/* The first heading is usually the page title inside .doc-content;
+   don't add extra top margin to it since the content box provides
+   spacing. This keeps the title closer to the top of the box. */
+.doc-content > h1:first-of-type {
+	margin-top: 0;
 }
 .doc-content h2 {
 	font-size: 1.5rem;
@@ -679,7 +687,8 @@ footer {
 		border-radius: 8px;
 	}
 	.doc-content {
-		padding: 1.2rem 0.7rem;
+		/* also remove top padding on small screens so content looks tighter */
+		padding: 0 0.7rem 1.2rem;
 		font-size: 1rem;
 		margin: 1rem 0;
 		max-width: 100vw;
