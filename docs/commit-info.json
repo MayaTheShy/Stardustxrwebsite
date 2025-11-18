@@ -1,0 +1,69 @@
+{
+  "docs/01-get-started/01-What-is-Stardust.md": {
+    "sha": "c510b9c2b579a9c25dcd3176e08dd8ee23300ef4",
+    "author": "Owen Zimmerman",
+    "date": "2025-07-09T22:22:19-05:00",
+    "message": "Fix the build (#32)"
+  },
+  "docs/01-get-started/03-setup-openxr.md": {
+    "sha": "c510b9c2b579a9c25dcd3176e08dd8ee23300ef4",
+    "author": "Owen Zimmerman",
+    "date": "2025-07-09T22:22:19-05:00",
+    "message": "Fix the build (#32)"
+  },
+  "docs/01-get-started/04-manual.md": {
+    "sha": "8a601744984fff2ee86648e197bb8f5d81458bc5",
+    "author": "MayaTheShy",
+    "date": "2025-11-17T00:13:17-05:00",
+    "message": "feat: streamline installation instructions for Stardust XR on Fedora and NixOS"
+  },
+  "docs/01-get-started/05-quest-3-setup.md": {
+    "sha": "bcc3a5a057af8fbe59dadc47ad353691fb967c76",
+    "author": "Owen Zimmerman",
+    "date": "2025-07-09T22:11:02-05:00",
+    "message": "remove quick start page, various updates for existing pages (#31)"
+  },
+  "docs/02-User-Guide/01-What-is-Stardust.md": {
+    "sha": "84719643b72c9a4b285acf7eef2a3d811242bfdd",
+    "author": "Cyberneticmelon",
+    "date": "2025-03-31T21:42:16-04:00",
+    "message": "Added XR & Hand tracking guides"
+  },
+  "docs/02-User-Guide/02-XR-Navigation.md": {
+    "sha": "84719643b72c9a4b285acf7eef2a3d811242bfdd",
+    "author": "Cyberneticmelon",
+    "date": "2025-03-31T21:42:16-04:00",
+    "message": "Added XR & Hand tracking guides"
+  },
+  "docs/03-dive-deeper/01-brief-overview.md": {
+    "sha": "bcc3a5a057af8fbe59dadc47ad353691fb967c76",
+    "author": "Owen Zimmerman",
+    "date": "2025-07-09T22:11:02-05:00",
+    "message": "remove quick start page, various updates for existing pages (#31)"
+  },
+  "docs/03-dive-deeper/02-deep-overview.md": {
+    "sha": "84719643b72c9a4b285acf7eef2a3d811242bfdd",
+    "author": "Cyberneticmelon",
+    "date": "2025-03-31T21:42:16-04:00",
+    "message": "Added XR & Hand tracking guides"
+  },
+  "docs/03-dive-deeper/03-make-clients.md": {
+    "sha": "84719643b72c9a4b285acf7eef2a3d811242bfdd",
+    "author": "Cyberneticmelon",
+    "date": "2025-03-31T21:42:16-04:00",
+    "message": "Added XR & Hand tracking guides"
+  },
+  "docs/03-dive-deeper/09-terminology.md": {
+    "sha": "84719643b72c9a4b285acf7eef2a3d811242bfdd",
+    "author": "Cyberneticmelon",
+    "date": "2025-03-31T21:42:16-04:00",
+    "message": "Added XR & Hand tracking guides"
+  },
+  "docs/launch-options.md": {
+    "sha": "6a687dc02520c4ed47abb058f984d29bf9a7118a",
+    "author": "MayaTheShy",
+    "date": "2025-11-16T23:53:43-05:00",
+    "message": "docs: add comprehensive launch arguments and options documentation for all major components"
+  },
+  "__repo__": "https://github.com/MayaTheShy/Stardustxrwebsite"
+}

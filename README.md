@@ -32,3 +32,18 @@ URL of the form:
 
 Adding a new document is as easy as dropping a `.md` file into the `docs`
 folder.
+
+### Showing latest doc commit info
+
+The docs site can show the author & date of the last commit for each document.
+To populate this information for the static site, run the included node script
+that writes `docs/commit-info.json` with the latest commit author, date, and
+message. Run this before deploying the site:
+
+```
+node scripts/generate-docs-commit-info.js
+```
+
+The page will then fetch `docs/commit-info.json` and show a small panel under
+the document with the author and date; hovering the author shows the commit
+message.

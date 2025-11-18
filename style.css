@@ -388,6 +388,54 @@
 	font-size: 1em;
 	font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
 }
+/* Commit panel: small bar underneath each doc with latest author and date */
+.doc-commit-panel {
+	margin: 1rem 0 2rem 0;
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.6rem;
+	align-items: center;
+	color: var(--text-muted);
+	font-size: 0.95rem;
+}
+.doc-commit-panel .commit-by {
+	color: var(--primary);
+	font-weight: 700;
+	position: relative;
+	cursor: help;
+	outline: none;
+}
+/* Tooltip with commit message & short SHA on hover/focus. We use data-message
+	 so the content is available to the CSS pseudo element (attr()). */
+.doc-commit-panel .commit-by::after {
+	content: attr(data-message);
+	display: none;
+	position: absolute;
+	right: 0;
+	top: calc(100% + 8px);
+	z-index: 2200;
+	max-width: 420px;
+	white-space: pre-wrap;
+	background: rgba(20,18,30,0.96);
+	color: var(--text-muted);
+	padding: 0.6rem 0.8rem;
+	border-radius: 10px;
+	border: 1px solid rgba(255,255,255,0.04);
+	box-shadow: 0 6px 24px rgba(0,0,0,0.36);
+	font-size: 0.92rem;
+	line-height: 1.2;
+}
+.doc-commit-panel .commit-by:hover::after,
+.doc-commit-panel .commit-by:focus::after {
+	display: block;
+}
+.doc-commit-panel .commit-link {
+	color: var(--text);
+	color: var(--primary);
+	font-weight: 700;
+	text-decoration: none;
+}
+.doc-commit-panel .commit-link:hover { text-decoration: underline; }
 .doc-content a {
 	color: var(--primary);
 	text-decoration: underline;

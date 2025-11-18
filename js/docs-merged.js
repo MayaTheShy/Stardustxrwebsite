@@ -27,9 +27,67 @@ async function loadDocMerged() {
     let text = await res.text();
     text = text.replace(/^---[\s\S]*?---\n/, '');
     container.innerHTML = marked.parse(text);
+    // Try to load commit info and show a small panel under the doc content.
+    (async function showCommitInfo() {
+      try {
+        const res = await fetch('docs/commit-info.json');
+        if (!res.ok) return;
+        const map = await res.json();
+  const info = map[file];
+        if (!info) return;
+        // Small HTML panel that shows author & date and a neat hover for the commit message
+        const panel = document.createElement('div');
+        panel.className = 'doc-commit-panel';
+        const author = document.createElement('span');
+        author.className = 'commit-by';
+        // use data-message so a CSS pseudo-element can display it on hover
+        author.setAttribute('data-message', escapeHtml(info.message || ''));
+        author.setAttribute('tabindex', '0');
+        author.textContent = info.author || 'Unknown';
+
+        const when = document.createElement('span');
+        when.className = 'commit-when';
+        // Use toLocaleString for nicer formatting in the user's timezone
+        try {
+          when.textContent = new Date(info.date).toLocaleString();
+        } catch (e) { when.textContent = info.date || ''; }
+
+        panel.appendChild(document.createTextNode('Last updated: '));
+        panel.appendChild(author);
+        panel.appendChild(document.createTextNode(' '));
+        panel.appendChild(when);
+
+        // Also include a link to the commit if the repo url is provided.
+        if (map.__repo__) {
+          const a = document.createElement('a');
+          a.href = (map.__repo__.replace(/\/$/, '')) + '/commit/' + info.sha;
+          a.textContent = 'View commit';
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.className = 'commit-link';
+          a.style.marginLeft = '0.6rem';
+          panel.appendChild(a);
+        }
+
+        // Append the panel right after the content.
+        const wrap = document.getElementById('docs-content-wrap');
+        if (wrap) wrap.appendChild(panel);
+      } catch (e) { /* ignore commit info errors */ }
+    })();
   } catch (e) {
     container.textContent = 'Error loading document.';
   }
+}
+
+// Basic escaping for data attributes / text content when inserting into DOM
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 window.addEventListener('hashchange', loadDocMerged);
 window.addEventListener('load', loadDocMerged);
