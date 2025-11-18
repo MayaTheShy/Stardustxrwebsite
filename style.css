@@ -98,12 +98,12 @@
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	background: rgba(0,0,0,0.4);
-	z-index: 2001;
+	background: rgba(0,0,0,0.45);
+	z-index: 3000; /* above page content */
 	backdrop-filter: blur(2px);
 	transition: opacity 0.3s cubic-bezier(.4,0,.2,1);
 }
-.sidebar-overlay.active {
+	.sidebar-overlay.active {
 	display: block;
 }
 
@@ -117,28 +117,59 @@
 		transition: opacity 300ms ease, background 300ms ease;
 	}
 
+	/* Render overlay lower so header remains fully visible above it */
+	.sidebar-overlay,
+	.sidebar-overlay.active {
+		top: var(--header-height);
+		height: calc(100vh - var(--header-height));
+	}
+
 	body.sidebar-open .docs-sidebar {
+		position: fixed; /* ensure it's removed from flow */
+		z-index: 3002; /* above overlay */
 		left: 0;
-		top: 0;
+		top: var(--header-height);
 		width: 100vw;
-		height: 100vh;
+		height: calc(100vh - var(--header-height));
 		max-width: none;
 		border-radius: 0;
 		padding-top: calc(var(--header-height) + 1.6rem);
 		box-shadow: none;
 		transform: translateX(0); /* ensure it's visible when open */
 		transition: transform 300ms cubic-bezier(.2,.8,.2,1), width 300ms ease;
+		overflow-y: auto;
 	}
 
 	/* Lock background scroll while overlay is displayed */
 	body.sidebar-open { overflow: hidden; }
+
+	/* Ensure header remains visible above the overlay and sidebar on mobile
+	   so it doesn't disappear behind the fullscreen menu. Make it fixed so
+	   it remains sticky while the overlay is active. */
+	body.sidebar-open header {
+		z-index: 4000; /* higher than overlay (3000) and docs-sidebar (3002) */
+		position: fixed; /* keep header in view */
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+		backdrop-filter: blur(2px);
+	}
+
+	/* When the header becomes fixed we should prevent content from jumping.
+	   Add small top padding to the main area while the overlay is open. */
+	body.sidebar-open main {
+		padding-top: calc(var(--header-height) + 0.75rem);
+	}
 }
 /* Docs sidebar navigation */
 /* Docs sidebar navigation */
 .docs-sidebar {
 	min-width: 220px;
 	max-width: 260px;
-	background: var(--background-light);
+	background: linear-gradient(180deg, rgba(26,23,37,0.78), rgba(24,21,33,0.66));
+	backdrop-filter: blur(8px) saturate(120%);
 	border-radius: 10px;
 	box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
 	padding: 2rem 1.2rem 2rem 1.2rem;
@@ -151,8 +182,12 @@
 .docs-sidebar h2 {
 	color: var(--primary);
 	font-size: 1.2rem;
+	font-family: var(--font-heading);
+	font-weight: 700;
 	margin-bottom: 1.2em;
 	text-align: left;
+	letter-spacing: 0.02em;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 .docs-sidebar ul {
 	list-style: none;
@@ -171,6 +206,7 @@
 	color: var(--primary);
 	text-decoration: none;
 	transition: color 0.2s;
+	font-weight: 600;
 }
 .docs-sidebar a:hover {
 	color: #fffbe6;
@@ -276,7 +312,8 @@
 }
 /* Docs content styling */
 .doc-content {
-	background: var(--background-light);
+	background: linear-gradient(180deg, rgba(26,23,37,0.88), rgba(24,21,33,0.78));
+	backdrop-filter: blur(4px) saturate(110%);
 	color: var(--text);
 	max-width: 900px;
 	/* Match the docs-sidebar top spacing so both start at the same height */
@@ -293,9 +330,13 @@
 .doc-content h2,
 .doc-content h3 {
 	color: var(--primary);
+	font-family: var(--font-heading);
+	font-weight: 700;
 	margin-top: 2rem;
 	margin-bottom: 1rem;
 	font-weight: 700;
+	letter-spacing: 0.01em;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 .doc-content h1 {
 	font-size: 2.2rem;
@@ -394,9 +435,12 @@
 	color: var(--text-muted);
 	font-style: italic;
 }
-.doc-content p {
-	margin: 1.1em 0;
+.doc-content a {
+	color: var(--primary);
+	text-decoration: underline;
+	font-weight: 600;
 }
+.doc-content p, .doc-content li { font-family: var(--font-sans); letter-spacing: 0.01em; }
 :root {
 	--primary: #ffe44d;
 	--background: #13111a;
@@ -406,9 +450,12 @@
 	--accent: #6b4595;
 	--header-height: 48px; /* tuned smaller to match actual header height */
 	--docs-top-gap: 1.5rem; /* top gap used for both sidebar and content on desktop */
+	/* nice fonts */
+	--font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	--font-heading: 'Poppins', 'Segoe UI', Roboto, Arial, sans-serif;
     /* Cute overlay gradient for mobile sidebar */
     --overlay-color-a: rgba(107,69,149,0.9);
-    --overlay-color-b: rgba(255,228,77,0.85);
+	--overlay-color-b: rgba(255,228,77,0.85);
 }
 
 * {
@@ -419,10 +466,13 @@
 
 body {
 	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: var(--font-sans);
 	background: var(--background);
 	color: var(--text);
 	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 }
 
 /* Header */
@@ -487,7 +537,11 @@ header {
 
 .logo-container h1 {
 	margin: 0;
-	font-size: 1.5rem;
+	font-size: 1.55rem;
+	font-family: var(--font-heading);
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.45);
 }
 
 /* Navigation */
