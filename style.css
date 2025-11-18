@@ -63,9 +63,12 @@
 }
 
 
+/* ...existing code... */
+
+/* Ensure hamburger menu appears on mobile */
 @media (max-width: 900px) {
-	#docs-sidebar:not(.open) {
-		display: none;
+	.sidebar-toggle {
+		display: block;
 	}
 }
 /* Docs sidebar navigation */
