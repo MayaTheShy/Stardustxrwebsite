@@ -16,6 +16,9 @@
 @media (max-width: 900px) {
 	.docs-flex { flex-direction: column; }
 
+	/* show the hamburger on small screens */
+	.sidebar-toggle { display: inline-flex; }
+
 	.docs-sidebar {
 		position: fixed;
 		left: 0;
