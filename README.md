@@ -7,6 +7,14 @@ This repository contains a minimal static website for the Stardust XR project.
 No build tools are required. Open `index.html` in your browser or serve the
 folder with any static web server.
 
+### Image popup
+
+Clicking most images on the site (feature or showcase images and images inside
+the documentation content) will open a lightbox-style popup. To opt-out for a
+particular image, add the `no-popup` class to the `<img>` element. You can also
+set a `data-full` attribute on an `<img>` to point to a higher-resolution
+source for the popup.
+
 ## Documentation
 
 Markdown files live in the `docs/` directory. The docs page loads them on demand

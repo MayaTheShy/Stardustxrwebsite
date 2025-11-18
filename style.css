@@ -888,6 +888,67 @@ footer {
 	body, html {
 		overflow-x: hidden;
 	}
+
+	/* Image popup (lightbox) */
+	.image-popup-overlay {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.85);
+		display: none;
+		align-items: center;
+		justify-content: center;
+		z-index: 5000; /* above header and sidebar */
+	}
+	.image-popup-overlay.open {
+		display: flex;
+	}
+	.image-popup-wrap {
+		max-width: 95vw;
+		max-height: 95vh;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		align-items: center;
+		justify-content: center;
+	}
+	.image-popup-img {
+		max-width: 95vw;
+		max-height: 85vh;
+		object-fit: contain;
+		border-radius: 8px;
+		box-shadow: 0 6px 24px rgba(0,0,0,0.8);
+		transform: scale(.98);
+		transition: transform 160ms ease-in-out;
+	}
+	.image-popup-overlay.open .image-popup-img {
+		transform: scale(1);
+	}
+	.image-popup-caption {
+		color: var(--text-muted);
+		font-size: 0.98rem;
+		text-align: center;
+		max-width: 90vw;
+	}
+	.image-popup-close {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		color: #fff;
+		background: rgba(0,0,0,0.3);
+		border: 1px solid rgba(255,255,255,0.06);
+		border-radius: 6px;
+		width: 44px;
+		height: 44px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		z-index: 5010;
+	}
+	.image-popup-close:hover { background: rgba(255,255,255,0.06); }
+
+	/* Allow opt-out of popup by adding .no-popup to an image */
+	img.no-popup { cursor: default; }
 }
 
 /* When the tagline is hidden, move it out of the document flow only on
