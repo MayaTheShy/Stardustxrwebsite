@@ -635,3 +635,10 @@ footer {
 		overflow-x: hidden;
 	}
 }
+
+/* Ensure desktop header spacing always applies on wide screens */
+@media (min-width: 901px) {
+	main {
+		padding-top: calc(var(--header-height) + 0.25rem);
+	}
+}
