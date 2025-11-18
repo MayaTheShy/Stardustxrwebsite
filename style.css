@@ -260,6 +260,43 @@ body.sidebar-open .docs-sidebar li > ul {
 	margin-bottom: 0.2em;
 }
 
+/* Force center anchors/socials inside the overlay when sidebar is open on mobile.
+   This block intentionally sits after the default ./docs-sidebar rules so it has
+   higher specificity and can override desktop-list rules when the overlay is active. */
+@media (max-width: 900px) {
+	/* Center top-level list anchors and nested anchors as well for consistency */
+	body.sidebar-open .docs-sidebar li,
+	.docs-sidebar.open li,
+	#docs-sidebar.open li {
+		text-align: center;
+	}
+
+	body.sidebar-open .docs-sidebar li a,
+	.docs-sidebar.open li a,
+	#docs-sidebar.open li a {
+		display: inline-block; /* allows margin auto centering */
+		margin: 0.25rem auto; /* center horizontally */
+		text-align: center;
+	}
+
+	/* Social icons clones and nav-text moved into sidebar should be centered */
+	body.sidebar-open .docs-sidebar .sidebar-socials,
+	.docs-sidebar.open .sidebar-socials,
+	#docs-sidebar.open .sidebar-socials {
+		justify-content: center;
+	}
+
+	body.sidebar-open .docs-sidebar .sidebar-socials a.nav-icon,
+	.docs-sidebar.open .sidebar-socials a.nav-icon,
+	#docs-sidebar.open .sidebar-socials a.nav-icon,
+	body.sidebar-open .docs-sidebar .sidebar-socials a.nav-text,
+	.docs-sidebar.open .sidebar-socials a.nav-text,
+	#docs-sidebar.open .sidebar-socials a.nav-text {
+		display: inline-block;
+		margin: 0.35rem auto;
+	}
+}
+
 /* Mobile overlay-only styles moved after the main .docs-sidebar rules so
    they aren't accidentally overridden by the generic sidebar styles. This
    ensures the overlay/hamburger menu is bigger and centered on mobile
