@@ -7,11 +7,15 @@
     overlay.setAttribute('aria-modal', 'true');
     overlay.style.display = 'none';
 
-    const wrap = document.createElement('div');
-    wrap.className = 'image-popup-wrap';
+  // window frame to feel like a native window
+  const wrap = document.createElement('div');
+  wrap.className = 'image-popup-window';
 
-    const close = document.createElement('button');
-    close.className = 'image-popup-close';
+  const header = document.createElement('div');
+  header.className = 'image-popup-header';
+
+  const close = document.createElement('button');
+  close.className = 'image-popup-close';
     close.setAttribute('aria-label', 'Close image');
     close.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 6L18 18M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
@@ -23,10 +27,11 @@
     caption.className = 'image-popup-caption';
     caption.setAttribute('aria-hidden', 'true');
 
-    wrap.appendChild(img);
-    wrap.appendChild(caption);
-    overlay.appendChild(wrap);
-    overlay.appendChild(close);
+  header.appendChild(close);
+  wrap.appendChild(header);
+  wrap.appendChild(img);
+  wrap.appendChild(caption);
+  overlay.appendChild(wrap);
     document.body.appendChild(overlay);
 
     // close overlay when clicking outside the image (on the overlay)
@@ -66,6 +71,31 @@
         // Wait a frame then add class so CSS transition runs
         requestAnimationFrame(() => overlay.classList.add('open'));
         document.addEventListener('keydown', escClose);
+        // Once the image loads, attempt to display it at native resolution
+        img.onload = function () {
+          // compute available area for the image with margins
+          const margin = 32; // px
+          const maxW = Math.max(40, window.innerWidth - margin * 2);
+          const maxH = Math.max(40, window.innerHeight - margin * 2);
+          const naturalW = img.naturalWidth || img.width;
+          const naturalH = img.naturalHeight || img.height;
+
+          // if the image fits within the max area, display at native resolution
+          if (naturalW <= maxW && naturalH <= maxH) {
+            img.style.width = naturalW + 'px';
+            img.style.height = naturalH + 'px';
+          } else {
+            // else, scale it down preserving aspect ratio
+            const scale = Math.min(maxW / naturalW, maxH / naturalH);
+            img.style.width = Math.round(naturalW * scale) + 'px';
+            img.style.height = Math.round(naturalH * scale) + 'px';
+          }
+
+          // if caption is long allow it to wrap; focus close button once the layout stabilizes
+          setTimeout(() => {
+            try { close.focus(); } catch (err) { /* ignore */ }
+          }, 50);
+        };
         // move keyboard focus to the close button for accessibility
         close.setAttribute('tabindex', '0');
         try { close.focus(); } catch (err) { /* ignored */ }
