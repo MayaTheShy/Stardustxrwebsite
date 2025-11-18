@@ -106,6 +106,33 @@
 .sidebar-overlay.active {
 	display: block;
 }
+
+/* Mobile: cute fullscreen overlay and sidebar appearance */
+@media (max-width: 900px) {
+	.sidebar-overlay.active {
+		background: radial-gradient(1200px 900px at 10% 12%, var(--overlay-color-a) 0%, transparent 35%),
+					linear-gradient(135deg, var(--overlay-color-a) 0%, var(--overlay-color-b) 100%);
+		backdrop-filter: blur(8px) saturate(120%);
+		opacity: 0.98;
+		transition: opacity 300ms ease, background 300ms ease;
+	}
+
+	body.sidebar-open .docs-sidebar {
+		left: 0;
+		top: 0;
+		width: 100vw;
+		height: 100vh;
+		max-width: none;
+		border-radius: 0;
+		padding-top: calc(var(--header-height) + 1.6rem);
+		box-shadow: none;
+		transform: translateX(0); /* ensure it's visible when open */
+		transition: transform 300ms cubic-bezier(.2,.8,.2,1), width 300ms ease;
+	}
+
+	/* Lock background scroll while overlay is displayed */
+	body.sidebar-open { overflow: hidden; }
+}
 /* Docs sidebar navigation */
 /* Docs sidebar navigation */
 .docs-sidebar {
@@ -379,6 +406,9 @@
 	--accent: #6b4595;
 	--header-height: 48px; /* tuned smaller to match actual header height */
 	--docs-top-gap: 1.5rem; /* top gap used for both sidebar and content on desktop */
+    /* Cute overlay gradient for mobile sidebar */
+    --overlay-color-a: rgba(107,69,149,0.9);
+    --overlay-color-b: rgba(255,228,77,0.85);
 }
 
 * {
