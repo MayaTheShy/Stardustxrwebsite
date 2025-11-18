@@ -110,4 +110,27 @@ window.addEventListener('DOMContentLoaded', () => {
     syncSocialsToSidebar();
     window.addEventListener('resize', syncSocialsToSidebar);
   }
+  // Hide the tagline when it would wrap to more than one line
+  const tagline = document.querySelector('.tagline');
+  function updateTagline() {
+    if (!tagline) return;
+    // getClientRects length > 1 means it rendered on multiple lines
+    const rects = tagline.getClientRects();
+    const wrapped = rects && rects.length > 1;
+    if (wrapped) {
+      tagline.classList.add('tagline-hidden');
+      tagline.setAttribute('aria-hidden', 'true');
+    } else {
+      tagline.classList.remove('tagline-hidden');
+      tagline.removeAttribute('aria-hidden');
+    }
+  }
+  // Run on load and on resize; also use ResizeObserver if available for better accuracy
+  updateTagline();
+  window.addEventListener('resize', updateTagline);
+  if (window.ResizeObserver) {
+    try {
+      new ResizeObserver(updateTagline).observe(document.querySelector('.header-content'));
+    } catch (e) { /* ignore, fall back to resize event */ }
+  }
 });

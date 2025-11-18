@@ -419,6 +419,11 @@ header {
 	gap: 2rem;
 }
 
+/* Hide/show tagline helpers */
+.tagline-hidden {
+	display: none !important;
+}
+
 .logo-container {
 	display: flex;
 	align-items: center;
