@@ -372,8 +372,6 @@ body {
 header {
 	background: var(--background-light);
 	padding: 1rem 2rem;
-	position: relative;
-	z-index: 3000; /* make sure header is above overlay/sidebar */
 }
 
 .header-content {
@@ -391,7 +389,7 @@ header {
 }
 
 /* Keep logo on top of toggle and sidebar */
-.logo-container { position: relative; z-index: 3001; }
+.logo-container { position: relative; }
 
 .logo {
 	width: 40px;
